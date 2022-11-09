@@ -104,7 +104,7 @@ if pages == 'Map':
                     'Affected':'Affected'}
 
     if Soort_data_dict[Soort_data]=='Intensity':
-        rampen_df_intensity = rampen_df.groupby(['ISO', 'Country', 'Year'])['Intensity'].mean().to_frame().reset_index()
+        rampen_df_intensity = rampen_df.groupby(['ISO', 'Country', 'Year'])['Intensity'].max().to_frame().reset_index()
         rampen_df_intensity = rampen_df_intensity.pivot_table(
             index=['ISO', 'Country'], 
             columns='Year', 
@@ -138,7 +138,7 @@ if pages == 'Map':
 
 if pages == 'Economic change':
     landen = rampen_df[['Country', 'ISO']]
-    landen_naam = rampen_df['Country'].to_list()
+    landen_naam = rampen_df['Country'].unique()
     landen_dict = landen.set_index('Country').to_dict()
     landen_dict = landen_dict['ISO']
     landen_box = st.selectbox('Choose a country', landen_naam)
