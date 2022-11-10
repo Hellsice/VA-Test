@@ -240,7 +240,7 @@ if pages == 'Economic change':
     for index, row in GDP_land.iterrows():
         GDP_land['Percent'].iloc[index] = (GDP_land2[land_code].iloc[index+1]-GDP_land2[land_code].iloc[index])/GDP_land2[land_code].iloc[index]-\
         (GDP_land2['WLD'].iloc[index+1]-GDP_land2['WLD'].iloc[index])/GDP_land2['WLD'].iloc[index]
-        
+    GDP_land['Percent'] = GDP_land['Percent']*100    
     with col5:
         GDP_land
 
