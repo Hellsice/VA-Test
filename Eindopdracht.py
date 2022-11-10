@@ -272,7 +272,7 @@ if pages == 'Economic change':
     with col6:
         st.plotly_chart(scatter_graph)
         
-    percentage_fig = go.Line(x=GDP_grafiek['Year'].to_list(), y=GDP_grafiek['Percent']).to_list())
+    percentage_fig = go.Line(x=GDP_grafiek['Year'].to_list(), y=GDP_grafiek['Percent'].to_list())
     with col5:
         st.plotly_chart(percentage_fig)
 
