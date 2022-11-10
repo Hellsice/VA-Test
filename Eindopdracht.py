@@ -284,6 +284,7 @@ if pages == 'Economic change':
 if pages == 'Comparison disasters': 
     col3, col4 = st.columns([1,1])
     data_subtypes = rampen_df[rampen_df['Disaster Subtype']==type_box].reset_index(drop=True)
+    data_subtypes = data_subtypes.fillna(0)
     data_subtypes_jaar_0 = data_subtypes[data_subtypes['Jaar 0']!=0]
     data_subtypes_jaar_1 = data_subtypes[data_subtypes['Jaar 1']!=0]
     data_subtypes_jaar_2 = data_subtypes[data_subtypes['Jaar 2']!=0]
@@ -343,7 +344,7 @@ if pages == 'The Big 4':
         Category_data = Category_data.dropna(axis=0)
         Category_data = Category_data.sort_values(by='Disaster Type').reset_index(drop=True)
     
-    
+    Category_data = Category_data[Category_data['Jaar 0']!=0
     fig_a2 = px.box(Category_data, x='Disaster Type', y='Jaar 0', color='Disaster Type')
     fig_b2 = px.box(Category_data, x='Disaster Type', y='Jaar 1', color='Disaster Type')
     fig_c2 = px.box(Category_data, x='Disaster Type', y='Jaar 2', color='Disaster Type')
