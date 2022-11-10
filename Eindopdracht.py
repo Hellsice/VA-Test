@@ -40,10 +40,18 @@ rampen_df = pd.read_csv('rampen_df.csv')
 
 if pages== 'Map' or pages == 'Economic change' or pages == 'Comparison disasters':
     with st.form(key='my_form'):
+        commit = st.form_submit_button('Submit')
         Total_affected_mult = st.slider('Set the total affected multiplier',min_value=0.0, value=0.3 ,max_value=1.0, step=0.01)
         Intensity_threshold = st.number_input('Set the intensity threshold (default: 0.00001)', min_value=0.0, value=0.00001, max_value=1.0, step=0.00001)
         jaar = st.slider('Select year',min_value=1961, value=2018 ,max_value=2018)
-        commit = st.form_submit_button('Submit')
+        if pages == 'Map':
+            Soort_data = ''
+            Soort_data = st.selectbox('Select data type', ['Intensity', 'Affected'])
+            Soort_data_dict = {'Intensity':'Intensity',
+                               'Affected':'Affected'}
+            
+        
+        
 
     round_mult = 100000
     rampen_df['Intensity'] = 0
@@ -84,11 +92,6 @@ if pages== 'Map' or pages == 'Economic change' or pages == 'Comparison disasters
 
 
 if pages == 'Map':
-    Soort_data = ''
-    Soort_data = st.selectbox('Select data type', ['Intensity', 'Affected'])
-    Soort_data_dict = {'Intensity':'Intensity',
-                    'Affected':'Affected'}
-
     if Soort_data_dict[Soort_data]=='Intensity':
         rampen_df_intensity = rampen_df.groupby(['ISO', 'Country', 'Year'])['Intensity'].max().to_frame().reset_index()
         rampen_df_intensity = rampen_df_intensity.pivot_table(
