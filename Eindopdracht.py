@@ -35,6 +35,11 @@ df = countries_geojson.merge(GDP, left_on='ISO_A3', right_on='Country Code', how
 
 rampen_df = pd.read_csv('rampen_df.csv')
 
+if pages == 'Home':
+    st.markdown('Gemaakt door Bart Sil Combee')
+    st.image('disasters.png')
+
+
 
 
 
