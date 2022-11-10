@@ -42,8 +42,8 @@ if pages == 'Home':
     
 if pages == 'Sources':
     st.markdown('Data sources:')
-    st.markdown('Population: api.worldbank.org, https://data.worldbank.org/indicator/NY.GDP.MKTP.CD')
-    st.markdown('GDP: api.worldbank.org, https://data.worldbank.org/indicator/SP.POP.TOTL')
+    st.markdown('Population: worldbank.org, https://data.worldbank.org/indicator/NY.GDP.MKTP.CD')
+    st.markdown('GDP: worldbank.org, https://data.worldbank.org/indicator/SP.POP.TOTL')
     st.markdown('Disaster Data: EMDAT-public, https://public.emdat.be/data')
     st.markdown('Geodata: datahub, https://datahub.io/core/geo-countries')
     st.markdown('Formula for Intensity: "The Growth Aftermath of Natural Disasters" by Thomas Fomby, Yuki Ikeda and Norman Loayza')
