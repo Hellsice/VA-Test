@@ -48,7 +48,8 @@ if pages== 'Map' or pages == 'Economic change' or pages == 'Comparison disasters
         commit = st.form_submit_button('Submit')
         Total_affected_mult = st.slider('Set the total affected multiplier',min_value=0.0, value=0.3 ,max_value=1.0, step=0.01)
         Intensity_threshold = st.number_input('Set the intensity threshold (default: 0.00001)', min_value=0.0, value=0.00001, max_value=1.0, step=0.00001)
-        jaar = st.slider('Select year',min_value=1961, value=2018 ,max_value=2018)
+        if pages == 'Map' or pages == 'Economic change':
+            jaar = st.slider('Select year',min_value=1961, value=2018 ,max_value=2018)
         
         
         round_mult = 100000
