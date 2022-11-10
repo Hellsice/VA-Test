@@ -70,12 +70,12 @@ rampen_df_controle2 = rampen_df.groupby(['ISO', 'Country', 'Year', 'Disaster Gro
     st.markdown('')
     st.markdown('Determined GDP percentage change compared to the world.')
     st.code('''rampen_df.iloc[index, rampen_df.columns.get_loc('Jaar 1')] = \\
-            (GDP[GDP['Country Code']==rampen_df['ISO'][index]][str(rampen_df['Year'][index]+1)].values[0]\\
-             - GDP[GDP['Country Code']==rampen_df['ISO'][index]][str(rampen_df['Year'][index])].values[0])/\\
-            GDP[GDP['Country Code']==rampen_df['ISO'][index]][str(rampen_df['Year'][index])].values[0]\\
-            - (GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index]+1)].values[0]\\
-             - GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index])].values[0])/\\
-            GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index])].values[0]''', language='python')
+(GDP[GDP['Country Code']==rampen_df['ISO'][index]][str(rampen_df['Year'][index]+1)].values[0]\\
+ - GDP[GDP['Country Code']==rampen_df['ISO'][index]][str(rampen_df['Year'][index])].values[0])/\\
+GDP[GDP['Country Code']==rampen_df['ISO'][index]][str(rampen_df['Year'][index])].values[0]\\
+ - (GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index]+1)].values[0]\\
+ - GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index])].values[0])/\\
+GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index])].values[0]''', language='python')
     st.code("rampen_df['Jaar 0']=rampen_df['Jaar 0']*100", language='python')
     st.markdown('')
     st.markdown("Making a submit button that's shared across different pages.")
@@ -212,7 +212,7 @@ if pages == 'Map':
             columns='Year', 
             values='Intensity'
         ).reset_index()
-        rampen_df_intensity.index.name = rampen_df_intensity.columns.name = None
+        rampen_df_intensity.index.name = None
         rampen_df_intensity = rampen_df_intensity.fillna(0)
         rampen_df_intensity = countries_geojson.merge(rampen_df_intensity, left_on='ISO_A3', right_on='ISO', how='right')
         df_adjusted = rampen_df_intensity
@@ -223,7 +223,7 @@ if pages == 'Map':
             columns='Year', 
             values='Total Affected new'
         ).reset_index()
-        rampen_df_affected.index.name = rampen_df_affected.columns.name = None
+        rampen_df_affected.index.name = None
         rampen_df_affected = rampen_df_affected.fillna(0)
         rampen_df_affected = countries_geojson.merge(rampen_df_affected, left_on='ISO_A3', right_on='ISO', how='right')
         df_adjusted = rampen_df_affected
@@ -238,7 +238,7 @@ if pages == 'Map':
     Soort_data = st.selectbox('Select data type', ['Intensity', 'Affected'])''', language='python')
     st.markdown('')
     st.markdown('Filtered the dataset based on the selectbox choice. Intensity used max value, Affected used sum.')
-    
+    st.code('''rampen_df_intensity = rampen_df.groupby(['ISO', 'Country', 'Year'])['Intensity'].max().to_frame().reset_index()''', language='python')
     
     
     
