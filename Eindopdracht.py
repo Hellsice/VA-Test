@@ -269,7 +269,7 @@ if pages == 'Economic change':
             intensiteit.append(check['Intensity'].values[i])
             if subtypen == 0:
                 a = 'In ' + str(jaar) + ' in ' + landen_box + ' a disaster of type: ' + type_rampen[i] +' occured'\
-                b = 'The Intensity of the disaster was: ' + str(round(intensiteit[i]*round_mult)/round_mult)+'.'
+                b = 'The Intensity of the disaster was: ' + str(round(intensiteit[i]*round_mult)/round_mult) + '.'
             else:
                 a = 'In ' + str(jaar) + ' in ' + landen_box + ' a disaster of type and subtype: ' + subtypen[i] + ' occured.'
                 b = 'The Intensity of the disaster was: ' + str(round(intensiteit[i]*round_mult)/round_mult) + '.'
