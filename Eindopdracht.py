@@ -223,6 +223,8 @@ if pages == 'Economic change':
     grafiek_max_jaar = jaar+5
     grafiek_min_jaar = jaar-2
     grafiek_percent_jaar = jaar-3
+    if grafiek_max_jaar >2021:
+        grafiek_max_jaar = 2021
         
     GDP_grafiek = GDP.drop(['Country Name', 'Indicator Name', 'Indicator Code'], axis=1)
     GDP_grafiek = GDP_grafiek.set_index('Country Code').T.rename(pd.to_numeric).reset_index()
