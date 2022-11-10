@@ -47,24 +47,23 @@ if pages== 'Map' or pages == 'Economic change' or pages == 'Comparison disasters
         if pages == 'Map':
             Soort_data = ''
             Soort_data = st.selectbox('Select data type', ['Intensity', 'Affected'])
-            Soort_data_dict = {'Intensity':'Intensity',
-                               'Affected':'Affected'}
+            Soort_data_dict = {'Intensity':'Intensity','Affected':'Affected'}
         if pages == 'Economic change':
-                landen = rampen_df[['Country', 'ISO']]
-                landen_naam = rampen_df['Country'].unique()
-                landen_dict = landen.set_index('Country').to_dict()
-                landen_dict = landen_dict['ISO']
-                landen_box = st.selectbox('Choose a country', landen_naam)
-                land_code= landen_dict[landen_box]
+            landen = rampen_df[['Country', 'ISO']]
+            landen_naam = rampen_df['Country'].unique()
+            landen_dict = landen.set_index('Country').to_dict()
+            landen_dict = landen_dict['ISO']
+            landen_box = st.selectbox('Choose a country', landen_naam)
+            land_code= landen_dict[landen_box]
         if pages == 'Comparison disasters':
-                types = list(rampen_df['Disaster Subtype'].unique())  
-                type_names = list(rampen_df['Disaster Subtype'].unique())
-                type_dict = dict(zip(types, type_names))
-                type_box=st.selectbox('Kies een subtype', types)
-                categories = ['Categorie 1', 'Categorie 2', 'Categorie 3']
-                category= ['Category 1', 'Category 2', 'Category 3']
-                category_dict = dict(zip(categories, category))
-                category_box = st.selectbox('Kies een Ramp categorie', categories)
+            types = list(rampen_df['Disaster Subtype'].unique())  
+            type_names = list(rampen_df['Disaster Subtype'].unique())
+            type_dict = dict(zip(types, type_names))
+            type_box=st.selectbox('Kies een subtype', types)
+            categories = ['Categorie 1', 'Categorie 2', 'Categorie 3']
+            category= ['Category 1', 'Category 2', 'Category 3']
+            category_dict = dict(zip(categories, category))
+            category_box = st.selectbox('Kies een Ramp categorie', categories)
                 
                 
                 
