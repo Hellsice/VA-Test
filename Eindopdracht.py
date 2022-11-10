@@ -284,7 +284,12 @@ if pages == 'Economic change':
 if pages == 'Comparison disasters': 
     col3, col4 = st.columns([1,1])
     data_subtypes = rampen_df[rampen_df['Disaster Subtype']==type_box].reset_index(drop=True)
-    Fig_subtypes_jaar0 = px.box(data_subtypes, x='Category Subtypes', y='Jaar 0', color='Category Subtypes')
+    data_subtypes_jaar_0 = data_subtypes[data_subtypes['Jaar 0']!=0]
+    data_subtypes_jaar_1 = data_subtypes[data_subtypes['Jaar 1']!=0]
+    data_subtypes_jaar_2 = data_subtypes[data_subtypes['Jaar 2']!=0]
+    data_subtypes_jaar_3 = data_subtypes[data_subtypes['Jaar 3']!=0]
+    
+    Fig_subtypes_jaar0 = px.box(data_subtypes_jaar_0, x='Category Subtypes', y='Jaar 0', color='Category Subtypes')
     Fig_subtypes_jaar0.update_layout(title='<b>'+data_subtypes['Disaster Subtype'][0] + ': Jaar 0</b>')
     Fig_subtypes_jaar0.update_yaxes(title = '<b>GDP change compared to world</b>')
     Fig_subtypes_jaar0.update_xaxes(title = '<b>Category</b>')
@@ -293,7 +298,7 @@ if pages == 'Comparison disasters':
         st.plotly_chart(Fig_subtypes_jaar0)
     
     
-    Fig_subtypes_jaar1 = px.box(data_subtypes, x='Category Subtypes', y='Jaar 1', color='Category Subtypes')
+    Fig_subtypes_jaar1 = px.box(data_subtypes_jaar_1, x='Category Subtypes', y='Jaar 1', color='Category Subtypes')
     Fig_subtypes_jaar1.update_layout(title='<b>'+data_subtypes['Disaster Subtype'][0] + ': Jaar 1</b>')
     Fig_subtypes_jaar1.update_yaxes(title = '<b>GDP change compared to world</b>')
     Fig_subtypes_jaar1.update_xaxes(title = '<b>Category</b>')
@@ -302,7 +307,7 @@ if pages == 'Comparison disasters':
         st.plotly_chart(Fig_subtypes_jaar1)
     
     
-    Fig_subtypes_jaar2 = px.box(data_subtypes, x='Category Subtypes', y='Jaar 2', color='Category Subtypes')
+    Fig_subtypes_jaar2 = px.box(data_subtypes_jaar_2, x='Category Subtypes', y='Jaar 2', color='Category Subtypes')
     Fig_subtypes_jaar2.update_layout(title='<b>'+data_subtypes['Disaster Subtype'][0] + ': Jaar 2</b>')
     Fig_subtypes_jaar2.update_yaxes(title = '<b>GDP change compared to world</b>')
     Fig_subtypes_jaar2.update_xaxes(title = '<b>Category</b>')
@@ -311,7 +316,7 @@ if pages == 'Comparison disasters':
         st.plotly_chart(Fig_subtypes_jaar2)
     
     
-    Fig_subtypes_jaar3 = px.box(data_subtypes, x='Category Subtypes', y='Jaar 3', color='Category Subtypes')
+    Fig_subtypes_jaar3 = px.box(data_subtypes_jaar_3, x='Category Subtypes', y='Jaar 3', color='Category Subtypes')
     Fig_subtypes_jaar3.update_layout(title='<b>'+data_subtypes['Disaster Subtype'][0] + ': Jaar 3</b>')
     Fig_subtypes_jaar3.update_yaxes(title = '<b>GDP change compared to world</b>')
     Fig_subtypes_jaar3.update_xaxes(title = '<b>Category</b>')
