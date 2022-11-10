@@ -478,16 +478,16 @@ if pages == 'The Big 4':
     st.title('The Big 4 specific code')
     st.markdown('Added a page specific selectbox to the submit button code with an if statement.')
     st.code("""if pages == 'The Big 4':
-            categories = ['Categorie 1', 'Categorie 2', 'Categorie 3']
-            category= ['Category 1', 'Category 2', 'Category 3']
-            category_dict = dict(zip(categories, category))
-            category_box = st.selectbox('Choose a disaster category', categories)""", language='python')
-    st.markdown('Filtered on category and disaster type and dropped rows with NaN values')
+    categories = ['Categorie 1', 'Categorie 2', 'Categorie 3']
+    category= ['Category 1', 'Category 2', 'Category 3']
+    category_dict = dict(zip(categories, category))
+    category_box = st.selectbox('Choose a disaster category', categories)""", language='python')
+    st.markdown('Filtered on category and disaster type and dropped rows with NaN values.')
     st.code("""Category_data = rampen_df[(rampen_df['Category Types']==1)]
 Category_data = Category_data[(Category_data['Disaster Type']=='Drought') | (Category_data['Disaster Type']=='Flood') | (Category_data['Disaster Type']=='Storm') | (Category_data['Disaster Type']=='Earthquake')]
 Category_data = Category_data.dropna(axis=0)
 Category_data = Category_data.sort_values(by='Disaster Type').reset_index(drop=True)""", language='python')
-    st.markdown('remove rows with 0 values after making each chart')
+    st.markdown('Remove rows with 0 values after making each chart')
     st.code("""Category_data = Category_data[Category_data['Jaar 0']!=0]
 fig_a2 = px.box(Category_data, x='Disaster Type', y='Jaar 0', color='Disaster Type')
 Category_data = Category_data[Category_data['Jaar 1']!=0]
