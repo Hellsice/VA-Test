@@ -117,16 +117,6 @@ test2.columns = ['Year','ISO','Country','Disaster Group','Disaster Subgroup','Di
     st.code('''rampen_df['Category Types'] = test2['Category Types']
 rampen_df = rampen_df.sort_values(by='Year').reset_index(drop=True)''', language='python')
     
-
-    
-
-   
-    
-    
-    
-    
-    
-    
     
 if pages== 'Map' or pages == 'Economic change' or pages == 'Comparison disasters' or pages == 'The Big 4':
     with st.form(key='my_form'):
@@ -464,12 +454,24 @@ if pages == 'The Big 4':
     
     Category_data = Category_data[Category_data['Jaar 0']!=0]
     fig_a2 = px.box(Category_data, x='Disaster Type', y='Jaar 0', color='Disaster Type')
+    fig_a2.update_layout(title='<b>Year of disaster</b>')
+    fig_a2.update_xaxes(title='<b>Disaster Type</b>')
+    fig_a2.update_yaxes(title='<b>Percentage difference between country and world<b>')
     Category_data = Category_data[Category_data['Jaar 1']!=0]
     fig_b2 = px.box(Category_data, x='Disaster Type', y='Jaar 1', color='Disaster Type')
+    fig_b2.update_layout(title='<b>One year after disaster</b>')
+    fig_b2.update_xaxes(title='<b>Disaster Type</b>')
+    fig_b2.update_yaxes(title='<b>Percentage difference between country and world<b>')
     Category_data = Category_data[Category_data['Jaar 2']!=0]
     fig_c2 = px.box(Category_data, x='Disaster Type', y='Jaar 2', color='Disaster Type')
+    fig_c2.update_layout(title='<b>Two years after disaster</b>')
+    fig_c2.update_xaxes(title='<b>Disaster Type</b>')
+    fig_c2.update_yaxes(title='<b>Percentage difference between country and world<b>')
     Category_data = Category_data[Category_data['Jaar 3']!=0]
     fig_d2 = px.box(Category_data, x='Disaster Type', y='Jaar 3', color='Disaster Type')
+    fig_d2.update_layout(title='<b>Three years after disaster</b>')
+    fig_d2.update_xaxes(title='<b>Disaster Type</b>')
+    fig_d2.update_yaxes(title='<b>Percentage difference between country and world<b>')
     
     col1, col2 = st.columns([1,1])
     with col1:
