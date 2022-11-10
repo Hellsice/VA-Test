@@ -280,6 +280,7 @@ if pages == 'Economic change':
     percentage_fig.update_xaxes(title_text="<b>2 years before and 5 years after chosen year</b>")
     percentage_fig.update_yaxes(title_text="Percentage")
     percentage_fig.update_layout(title="<b>Difference in growth percentage of " + landen_box + ' compared to the world</b>')
+    percentage_fig.add_hline(y=0)
     with col6:
         st.plotly_chart(percentage_fig)
 
