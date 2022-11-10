@@ -299,7 +299,7 @@ if pages == 'Economic change':
         go.Line(x=GDP_grafiek['Year'].to_list(), y=GDP_grafiek[land_code].to_list(), name=landen_box),
         secondary_y=False)
     GDP_fig.update_layout(
-        title_text="<b>GDP comparison of world vs. " + landen_box +'</b>', title_x=0.3)
+        title_text="<b>GDP comparison of world vs. " + landen_box +'</b>', title_x=0.2)
     GDP_fig.update_xaxes(title_text="<b>2 years before and 5 years after chosen year</b>")
     GDP_fig.update_yaxes(title_text='<b>GDP ' + landen_box + ' in USD</b>', secondary_y=False)
     GDP_fig.update_yaxes(title_text='<b>GDP world in USD</b>', secondary_y=True)
