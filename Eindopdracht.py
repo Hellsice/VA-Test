@@ -80,12 +80,13 @@ GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index])].values[0]''', lan
     st.markdown('')
     st.markdown("Making a submit button that's shared across different pages.")
     st.markdown('note, all code after this point is part of the button.')
-    st.code('''with st.form(key='my_form'):
-    commit = st.form_submit_button('Submit')
-    Total_affected_mult = st.slider('Set the total affected multiplier',min_value=0.0, value=0.3 ,max_value=1.0, step=0.01)
-    Intensity_threshold = st.number_input('Set the intensity threshold (default: 0.00001)', min_value=0.0, value=0.00001, max_value=1.0, step=0.00001)
-    if pages == 'Map' or pages == 'Economic change':
-        jaar = st.slider('Select year',min_value=1961, value=2018 ,max_value=2018)''',language='python')
+    st.code('''if pages== 'Map' or pages == 'Economic change' or pages == 'Comparison disasters' or pages == 'The Big 4':
+    with st.form(key='my_form'):
+        commit = st.form_submit_button('Submit')
+        Total_affected_mult = st.slider('Set the total affected multiplier',min_value=0.0, value=0.3 ,max_value=1.0, step=0.01)
+        Intensity_threshold = st.number_input('Set the intensity threshold (default: 0.00001)', min_value=0.0, value=0.00001, max_value=1.0, step=0.00001)
+        if pages == 'Map' or pages == 'Economic change':
+            jaar = st.slider('Select year',min_value=1961, value=2018 ,max_value=2018)''',language='python')
     st.markdown('')
     st.markdown('Calculating intensity using the following formula:')
     st.markdown(r'''
