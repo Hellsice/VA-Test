@@ -12,7 +12,7 @@ import plotly.graph_objects as go
 st.set_page_config(layout="wide", page_title='Disaster influence on economy', initial_sidebar_state='expanded')
 st.title('Disaster influence on economy')
 st.sidebar.title('Navigation')
-pages = st.sidebar.radio('Pages', options=['Home', 'Data cleaning', 'Map', 'Economic change', 'Comparison disasters', 'The Big 4', 'Sources'])
+pages = st.sidebar.radio('Pages', options=['Home', 'General code', 'Map', 'Economic change', 'Comparison disasters', 'The Big 4', 'Sources'])
 
 od.download('https://datahub.io/core/geo-countries/r/countries.geojson')
 countries_geojson = gpd.read_file('countries.geojson')
@@ -49,7 +49,7 @@ if pages == 'Sources':
     st.markdown('Formula for Intensity: "The Growth Aftermath of Natural Disasters" by Thomas Fomby, Yuki Ikeda and Norman Loayza')
 
 
-if pages == 'Data cleaning':
+if pages == 'General code':
     st.markdown("Data retrieved via API's")
     st.code("response = requests.get('https://api.worldbank.org/v2/en/indicator/NY.GDP.MKTP.CD?downloadformat=excel') \n\
 output = open('GDP.xls', 'wb')\n\
@@ -77,12 +77,29 @@ rampen_df_controle2 = rampen_df.groupby(['ISO', 'Country', 'Year', 'Disaster Gro
     st.code("rampen_df['Jaar 0']=rampen_df['Jaar 0']*100", language='python')
     st.markdown('')
     st.markdown('')
+    st.code('''with st.form(key='my_form'):
+        commit = st.form_submit_button('Submit')
+        Total_affected_mult = st.slider('Set the total affected multiplier',min_value=0.0, value=0.3 ,max_value=1.0, step=0.01)
+        Intensity_threshold = st.number_input('Set the intensity threshold (default: 0.00001)', min_value=0.0, value=0.00001, max_value=1.0, step=0.00001)
+        if pages == 'Map' or pages == 'Economic change':
+            jaar = st.slider('Select year',min_value=1961, value=2018 ,max_value=2018)''',language='python')
+    st.markdown('')
     st.markdown('Bepaling van intensiteit')
     st.code('''rampen_df['Intensity'] = 0
     for i in range(len(rampen_df)):
         a = Population[Population['Country Code']==rampen_df['ISO'][i]]
         if len(a) == 1:
             rampen_df['Intensity'][i] = (rampen_df['Total Deaths'][i]+Total_affected_mult*rampen_df['Total Affected new'][i])/(a[str(rampen_df['Year'][i])].values[0])''', language='python')
+    st.code('''rampen_df = rampen_df[rampen_df['Intensity'] >= Intensity_threshold].reset_index(drop=True)''', language='python')
+    st.markdown('')
+    st.markdown('Calculating the quantiles of Disaster types and subtypes')
+    st.code('''quantiles_subtypes = rampen_df.groupby(['Disaster Group', 'Disaster Subgroup', 'Disaster Type','Disaster Subtype'])['Intensity'].quantile([0.25, 0.75]).reset_index()
+''', language='python')
+    st.markdown('Assigning category values to each Disaster type and subtype')
+    st.code('''for index, row in test2.iterrows():
+            test2.iloc[index, test2.columns.get_loc('Category Types')] = 3 if row['Intensity']>row['0.75'] else (1 if row['Intensity']<row['0.25'] else 2)
+''', language='python')
+    
 
 
 
