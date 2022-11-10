@@ -96,6 +96,7 @@ for i in range(len(rampen_df)):
     a = Population[Population['Country Code']==rampen_df['ISO'][i]]
     if len(a) == 1:
         rampen_df['Intensity'][i] = (rampen_df['Total Deaths'][i]+Total_affected_mult*rampen_df['Total Affected new'][i])/(a[str(rampen_df['Year'][i])].values[0])''', language='python')
+    st.markdown('Removing rows where intensity is below threshold.')
     st.code('''rampen_df = rampen_df[rampen_df['Intensity'] >= Intensity_threshold].reset_index(drop=True)''', language='python')
     st.markdown('')
     st.markdown('Calculating the quantiles of Disaster types and subtypes.')
@@ -434,6 +435,11 @@ if pages == 'Comparison disasters':
     st.markdown('Selected data is filtered based on selectbox and NaN values are replaced with 0.')
     st.code("""data_subtypes = rampen_df[rampen_df['Disaster Subtype']==type_box].reset_index(drop=True)
 data_subtypes = data_subtypes.fillna(0)""", language='python')
+    st.markdown("Made separate dataframe based on 0's in specific columns")
+    st.code("""data_subtypes_jaar_0 = data_subtypes[data_subtypes['Jaar 0']!=0].sort_values(by='Category Subtypes')
+data_subtypes_jaar_1 = data_subtypes[data_subtypes['Jaar 1']!=0].sort_values(by='Category Subtypes')
+data_subtypes_jaar_2 = data_subtypes[data_subtypes['Jaar 2']!=0].sort_values(by='Category Subtypes')
+data_subtypes_jaar_3 = data_subtypes[data_subtypes['Jaar 3']!=0].sort_values(by='Category Subtypes')""", language='python')
 
 if pages == 'The Big 4':
     if category_dict[category_box] == 'Category 1':
@@ -476,3 +482,8 @@ if pages == 'The Big 4':
             category= ['Category 1', 'Category 2', 'Category 3']
             category_dict = dict(zip(categories, category))
             category_box = st.selectbox('Choose a disaster category', categories)""", language='python')
+    st.markdown('Filtered on category and disaster type and dropped rows with NaN values')
+    st.code("""Category_data = rampen_df[(rampen_df['Category Types']==1)]
+Category_data = Category_data[(Category_data['Disaster Type']=='Drought') | (Category_data['Disaster Type']=='Flood') | (Category_data['Disaster Type']=='Storm') | (Category_data['Disaster Type']=='Earthquake')]
+Category_data = Category_data.dropna(axis=0)
+Category_data = Category_data.sort_values(by='Disaster Type').reset_index(drop=True)""", language='python')
