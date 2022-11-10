@@ -103,8 +103,10 @@ rampen_df_controle2 = rampen_df.groupby(['ISO', 'Country', 'Year', 'Disaster Gro
                  'Total Deaths','Total Affected new','Intensity','Jaar 0','Jaar 1','Jaar 2','Jaar 3',"0.25",'0.75']''', language='python')
     st.markdown('Assigning category values to each disaster type and subtype.')
     st.code('''for index, row in rampen_df.iterrows():
-            rampen_df.iloc[index, rampen_df.columns.get_loc('Category Types')] = 3 if row['Intensity']>row['0.75'] else (1 if row['Intensity']<row['0.25'] else 2)
+            test2.iloc[index, test2.columns.get_loc('Category Types')] = 3 if row['Intensity']>row['0.75'] else (1 if row['Intensity']<row['0.25'] else 2)
 ''', language='python')
+    st.code('''rampen_df['Category Types'] = test2['Category Types']
+    rampen_df = rampen_df.sort_values(by='Year').reset_index(drop=True)''', language='python')
     
 
 
