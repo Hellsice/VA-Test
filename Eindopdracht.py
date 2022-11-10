@@ -193,7 +193,8 @@ if pages == 'Map':
 
 
 if pages == 'Economic change':
-    col5, col6 = st.columns([2,2])
+    col5, col6 = st.columns([1,1])
+    col7, col8 = st.columns([1,1])
     land = landen_box
     check = rampen_df[rampen_df['Country']==landen_box]
     check = check[check['Year']==jaar]
@@ -269,7 +270,7 @@ if pages == 'Economic change':
     scatter_graph.update_xaxes(title_text="<b>2 years before and 5 years after chosen year</b>")
     scatter_graph.update_yaxes(title_text="<b>Intensity of disasters within year range</b>")
     scatter_graph.update_layout(showlegend=True)
-    col7, col8 = st.columns([1,1])
+
     with col8:
         st.plotly_chart(scatter_graph)
         
