@@ -241,7 +241,7 @@ if pages == 'Economic change':
         GDP_land['percent'].iloc[index] = (GDP_land2[land_code].iloc[index+1]-GDP_land2[land_code].iloc[index])/GDP_land2[land_code].iloc[index]-\
         (GDP_land2['WLD'].iloc[index+1]-GDP_land2['WLD'].iloc[index])/GDP_land2['WLD'].iloc[index]
         
-    with col6:
+    with col5:
         GDP_land
 
     GDP_fig = make_subplots(specs=[[{"secondary_y": True}]])
@@ -256,7 +256,7 @@ if pages == 'Economic change':
     GDP_fig.update_xaxes(title_text="<b>2 years before and 5 years after chosen year</b>")
     GDP_fig.update_yaxes(title_text='<b>GDP ' + landen_box + '</b>', secondary_y=False)
     GDP_fig.update_yaxes(title_text='<b>GDP world</b>', secondary_y=True)
-    with col5:
+    with col6:
         st.plotly_chart(GDP_fig)
     
    
@@ -265,7 +265,7 @@ if pages == 'Economic change':
     scatter_df = scatter_df[(scatter_df['Year']>=grafiek_min_jaar) & (scatter_df['Year']<=grafiek_max_jaar)]
     scatter_graph = px.scatter(x=scatter_df['Year'], y=scatter_df['Intensity'])
     scatter_graph.update_traces(marker=dict(size=12, color='Red'))
-    scatter_graph.update_layout(xaxis_range=[grafiek_min_jaar,grafiek_max_jaar])
+    scatter_graph.update_layout(xaxis_range=[grafiek_min_jaar-0.25,grafiek_max_jaar+0.25])
     with col6:
         st.plotly_chart(scatter_graph)
 
