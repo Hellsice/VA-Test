@@ -254,7 +254,7 @@ if pages == 'Economic change':
         go.Line(x=GDP_grafiek['Year'].to_list(), y=GDP_grafiek[land_code].to_list(), name=landen_box),
         secondary_y=False)
     GDP_fig.update_layout(
-        title_text="<b>GDP comparising of world vs. " + landen_box +'</b>')
+        title_text="<b>GDP comparison of world vs. " + landen_box +'</b>')
     GDP_fig.update_xaxes(title_text="<b>2 years before and 5 years after chosen year</b>")
     GDP_fig.update_yaxes(title_text='<b>GDP ' + landen_box + '</b>', secondary_y=False)
     GDP_fig.update_yaxes(title_text='<b>GDP world</b>', secondary_y=True)
@@ -267,17 +267,19 @@ if pages == 'Economic change':
     scatter_df = scatter_df[(scatter_df['Year']>=grafiek_min_jaar) & (scatter_df['Year']<=grafiek_max_jaar)]
     scatter_graph = px.scatter(x=scatter_df['Year'], y=scatter_df['Intensity'])
     scatter_graph.update_traces(marker=dict(size=12, color='Red'))
-    scatter_graph.update_layout(xaxis_range=[grafiek_min_jaar-0.25,grafiek_max_jaar+0.25])
+    scatter_graph.update_layout(xaxis_range=[grafiek_min_jaar-0.25,grafiek_max_jaar+0.25],
+                               yaxis_range=[0,0.5])
     scatter_graph.update_xaxes(title_text="<b>2 years before and 5 years after chosen year</b>")
     scatter_graph.update_yaxes(title_text="<b>Intensity of disasters within year range</b>")
-    scatter_graph.update_layout(showlegend=True)
+    scatter_graph.update_layout(title = 'Disaster occurences')
 
     with col8:
         st.plotly_chart(scatter_graph)
         
     percentage_fig = px.line(GDP_land, x='Year', y='Percent')
     percentage_fig.update_xaxes(title_text="<b>2 years before and 5 years after chosen year</b>")
-    percentage_fig.update_yaxes(title_text="<b>Difference in growth percentage of " + landen_box + ' compared to the world</b>' )
+    percentage_fig.update_yaxes(title_text="Percentage")
+    percentage_fig.update_layout(title="<b>Difference in growth percentage of " + landen_box + ' compared to the world</b>')
     with col6:
         st.plotly_chart(percentage_fig)
 
