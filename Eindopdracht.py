@@ -268,7 +268,7 @@ if pages == 'Economic change':
     scatter_graph.update_layout(xaxis_range=[grafiek_min_jaar-0.25,grafiek_max_jaar+0.25])
     scatter_graph.update_xaxes(title_text="<b>2 years before and 5 years after chosen year</b>")
     scatter_graph.update_yaxes(title_text="<b>Intensity of disasters within year range</b>")
-    scatter_graph.update_layout(showlegend=False)
+    scatter_graph.update_layout(showlegend=True)
     with col6:
         st.plotly_chart(scatter_graph)
 
