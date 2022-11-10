@@ -99,7 +99,7 @@ for i in range(len(rampen_df)):
     st.markdown('Merging dataframes and fixing column names.')
     st.code('''test2 = rampen_df.merge(quantiles_types, left_on=['Disaster Group', 'Disaster Subgroup', 'Disaster Type'], 
  right_on=['Disaster Group', 'Disaster Subgroup', 'Disaster Type'], how='left')
-test2.columns = ['Year','ISO','Country','Disaster Group','Disaster Subgroup','Disaster Type', 'Disaster Subtype','Total Deaths','Total Affected new','Intensity','Jaar 0','Jaar 1','Jaar 2','Jaar 3',"0.25",'0.75']''', language='python')
+test2.columns = ['Year','ISO','Country','Disaster Group','Disaster Subgroup','Disaster Type', 'Disaster Subtype','Total Deaths','Total Affected new','Intensity','Jaar 0','Jaar 1','Jaar 2','Jaar 3','0.25','0.75']''', language='python')
     st.markdown('Assigning category values to each disaster type and subtype.')
     st.code('''for index, row in rampen_df.iterrows():
     test2.iloc[index, test2.columns.get_loc('Category Types')] = 3 if row['Intensity']>row['0.75'] else (1 if row['Intensity']<row['0.25'] else 2)
@@ -108,7 +108,7 @@ test2.columns = ['Year','ISO','Country','Disaster Group','Disaster Subgroup','Di
 rampen_df = rampen_df.sort_values(by='Year').reset_index(drop=True)''', language='python')
     
 
-
+    st.markdown(' 	\frac{n!}{k!(n-k)!}')
 
    
     
@@ -224,6 +224,17 @@ if pages == 'Map':
     map = px.choropleth_mapbox(df_adjusted, geojson=df_adjusted.geometry, locations=df_adjusted.index, color=jaar, mapbox_style="open-street-map",
                           hover_name=df_adjusted.Country, zoom=1, height=800)
     st.plotly_chart(map, use_container_width=True)
+    
+    st.title('Map specific code')
+    st.markdown('Added a page specific selectbox to the submit button code with an if statement')
+    st.code('''if pages == 'Map':
+    Soort_data = st.selectbox('Select data type', ['Intensity', 'Affected'])''', language='python')
+    st.markdown('')
+    st.markdown('Filtered the dataset based on the selectbox choice. Intensity used max value, Affected used sum.')
+    
+    
+    
+    
 
 
 if pages == 'Economic change':
