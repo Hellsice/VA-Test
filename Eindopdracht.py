@@ -256,7 +256,7 @@ if pages == 'Economic change':
     GDP_fig.update_xaxes(title_text="<b>2 years before and 5 years after chosen year</b>")
     GDP_fig.update_yaxes(title_text='<b>GDP ' + landen_box + '</b>', secondary_y=False)
     GDP_fig.update_yaxes(title_text='<b>GDP world</b>', secondary_y=True)
-    with col6:
+    with col7:
         st.plotly_chart(GDP_fig)
     
    
@@ -274,7 +274,7 @@ if pages == 'Economic change':
         st.plotly_chart(scatter_graph)
         
     percentage_fig = px.line(GDP_land, x='Year', y='Percent')
-    with col7:
+    with col5:
         st.plotly_chart(percentage_fig)
 
 
