@@ -247,10 +247,10 @@ if pages == 'Economic change':
     GDP_fig = make_subplots(specs=[[{"secondary_y": True}]])
     GDP_fig.add_trace(
         go.Line(x=GDP_grafiek['Year'].to_list(), y=GDP_grafiek[land_code].to_list(), name=landen_box),
-        secondary_y=False)
+        secondary_y=True)
     GDP_fig.add_trace(
         go.Line(x=GDP_grafiek['Year'].to_list(), y=GDP_grafiek['WLD'].to_list(), name="World"),
-        secondary_y=True)
+        secondary_y=False)
     GDP_fig.update_layout(
         title_text="<b>GDP comparising of world vs. " + landen_box +'</b>')
     GDP_fig.update_xaxes(title_text="<b>2 years before and 5 years after chosen year</b>")
