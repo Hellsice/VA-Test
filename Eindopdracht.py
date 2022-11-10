@@ -103,6 +103,8 @@ for i in range(len(rampen_df)):
     st.markdown('Calculating the quantiles of Disaster types and subtypes.')
     st.code('''quantiles_subtypes = rampen_df.groupby(['Disaster Group', 'Disaster Subgroup', 'Disaster Type','Disaster Subtype'])['Intensity'].quantile([0.25, 0.75]).reset_index()
 ''', language='python')
+    st.markdown('Pivoting quantiles dataframe')
+    st.code('''quantiles_subtypes = quantiles_subtypes.pivot(index=['Disaster Group', 'Disaster Subgroup', 'Disaster Type','Disaster Subtype'], columns = 'level_4', values='Intensity').reset_index()''', language='python')
     st.markdown('Merging dataframes and fixing column names.')
     st.code('''test2 = rampen_df.merge(quantiles_types, left_on=['Disaster Group', 'Disaster Subgroup', 'Disaster Type'], 
                        right_on=['Disaster Group', 'Disaster Subgroup', 'Disaster Type'], how='left')
@@ -239,7 +241,10 @@ if pages == 'Map':
     st.markdown('')
     st.markdown('Filtered the dataset based on the selectbox choice. Intensity used max value, Affected used sum.')
     st.code('''rampen_df_intensity = rampen_df.groupby(['ISO', 'Country', 'Year'])['Intensity'].max().to_frame().reset_index()''', language='python')
-    
+    st.markdown('Pivot data and remove NaN values.')
+    st.code('''rampen_df_intensity = rampen_df_intensity.pivot_table(index=['ISO', 'Country'], columns='Year', values='Intensity').reset_index()
+rampen_df_intensity.index.name = rampen_df_intensity.columns.name = None
+rampen_df_intensity = rampen_df_intensity.fillna(0)''', language='python')
     
     
 
@@ -263,11 +268,11 @@ if pages == 'Economic change':
             subtypen.append(check['Disaster Subtype'].values[i])
             intensiteit.append(check['Intensity'].values[i])
             if subtypen == 0:
-                a = 'In ' + str(jaar) + ' was er in ' + landen_box + ' een natuurramp met type: ' + type_rampen[i]\
-                +'.\nHiervan was de intensiteit: ' + str(round(intensiteit[i]*round_mult)/round_mult)
+                a = 'In ' + str(jaar) + ' in ' + landen_box + ' a disaster of type: ' + type_rampen[i] +' occured'\
+                b = 'The Intensity of the disaster was: ' + str(round(intensiteit[i]*round_mult)/round_mult)+'.'
             else:
-                a = 'In ' + str(jaar) + ' was er in ' + landen_box + ' een natuurramp met type en subtype: ' + subtypen[i] + '.'
-                b = 'Hiervan was de intensiteit: ' + str(round(intensiteit[i]*round_mult)/round_mult) + '.'
+                a = 'In ' + str(jaar) + ' in ' + landen_box + ' a disaster of type and subtype: ' + subtypen[i] + ' occured.'
+                b = 'The Intensity of the disaster was: ' + str(round(intensiteit[i]*round_mult)/round_mult) + '.'
             print(a)
             with col5:
                 st.markdown(a)
@@ -337,7 +342,51 @@ if pages == 'Economic change':
         st.plotly_chart(percentage_fig)
 
 
+        
+    st.title('Economic change specific code')
+    st.markdown('Added a page specific selectbox to the submit button code with an if statement.')
+    st.code(""" if pages == 'Economic change':
+    landen_naam = np.sort(rampen_df['Country'].unique())
+    landen_box = st.selectbox('Choose a country', landen_naam)""", language='python')
+    st.markdown('Made a dataframe to check if a disaster occurred')
+    st.code('''check = rampen_df[rampen_df['Country']==landen_box]
+check = check[check['Year']==jaar]''', language='python')
+    st.markdown('Checked the length of the new dataframe')
+    st.code("""if len(check) == 0:
+    a = 'Er was geen ramp in dit jaar'
+else:
+    type_rampen = []
+    subtypen = []
+    intensiteit=[]
+    for i in range(len(check)):
+    type_rampen.append(check['Disaster Type'].values[i])
+    subtypen.append(check['Disaster Subtype'].values[i])
+    intensiteit.append(check['Intensity'].values[i])
+    a = 'In ' + str(jaar) + ' in ' + landen_box + ' a disaster of type and subtype: ' + subtypen[i] + ' occured.'
+    b = 'The Intensity of the disaster was: ' + str(round(intensiteit[i]*round_mult)/round_mult) + '.'""", language='python')
+    st.markdown('')
+    st.markdown('Graph limits were set')
+    st.code('''grafiek_max_jaar = jaar+5
+grafiek_min_jaar = jaar-2
+grafiek_percent_jaar = jaar-3
+if grafiek_max_jaar >2021:
+    grafiek_max_jaar = 2021''', language='python')
+    st.markdown('Graph dataframe is filtered and percentage change compared to world is calculated.')
+    st.code("""GDP_grafiek = GDP.drop(['Country Name', 'Indicator Name', 'Indicator Code'], axis=1)
+GDP_grafiek = GDP_grafiek.set_index('Country Code').T.rename(pd.to_numeric).reset_index()
+GDP_grafiek2 = GDP_grafiek[(GDP_grafiek['index']>=grafiek_percent_jaar) & (GDP_grafiek['index']<=grafiek_max_jaar)]
+GDP_grafiek = GDP_grafiek[(GDP_grafiek['index']>=grafiek_min_jaar) & (GDP_grafiek['index']<=grafiek_max_jaar)]
 
+GDP_grafiek = GDP_grafiek.rename(columns={'index':'Year'}, index={'Country Code':'Index'})
+GDP_grafiek2 = GDP_grafiek2.rename(columns={'index':'Year'}, index={'Country Code':'Index'})
+GDP_land = GDP_grafiek[['Year', land_code, 'WLD']].reset_index(drop=True)
+GDP_land2 = GDP_grafiek2[['Year', land_code, 'WLD']].reset_index(drop=True)
+
+GDP_land['Percent'] = 0
+for index, row in GDP_land.iterrows():
+    GDP_land['Percent'].iloc[index] = (GDP_land2[land_code].iloc[index+1]-GDP_land2[land_code].iloc[index])/GDP_land2[land_code].iloc[index]-\
+    (GDP_land2['WLD'].iloc[index+1]-GDP_land2['WLD'].iloc[index])/GDP_land2['WLD'].iloc[index]
+GDP_land['Percent'] = GDP_land['Percent']*100""", language='python')
 
 if pages == 'Comparison disasters': 
     col3, col4 = st.columns([1,1])
@@ -383,7 +432,14 @@ if pages == 'Comparison disasters':
     with col4:
         st.plotly_chart(Fig_subtypes_jaar3)
     
-    
+    st.title('Comparison disasters specific code')
+    st.markdown('Added a page specific selectbox to the submit button code with an if statement.')
+    st.code("""if pages == 'Comparison disasters':
+    types = np.sort(list(rampen_df['Disaster Subtype'].unique()))  
+    type_box=st.selectbox('Choose a subtype', types)""", language='python')
+    st.markdown('Selected data is filtered based on selectbox and NaN values are replaced with 0.')
+    st.code("""data_subtypes = rampen_df[rampen_df['Disaster Subtype']==type_box].reset_index(drop=True)
+data_subtypes = data_subtypes.fillna(0)""", language='python')
 
 if pages == 'The Big 4':
     if category_dict[category_box] == 'Category 1':
@@ -418,3 +474,11 @@ if pages == 'The Big 4':
     with col2:
         st.plotly_chart(fig_b2)
         st.plotly_chart(fig_d2)
+        
+    st.title('The Big 4 specific code')
+    st.markdown('Added a page specific selectbox to the submit button code with an if statement.')
+    st.code("""if pages == 'The Big 4':
+            categories = ['Categorie 1', 'Categorie 2', 'Categorie 3']
+            category= ['Category 1', 'Category 2', 'Category 3']
+            category_dict = dict(zip(categories, category))
+            category_box = st.selectbox('Choose a disaster category', categories)""", language='python')
