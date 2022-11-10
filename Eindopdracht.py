@@ -74,7 +74,16 @@ rampen_df_controle2 = rampen_df.groupby(['ISO', 'Country', 'Year', 'Disaster Gro
             GDP[GDP['Country Code']==rampen_df['ISO'][index]][str(rampen_df['Year'][index]-1)].values[0]\n\
     - (GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index])].values[0] - GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index]-1)].values[0])/\n\
             GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index]-1)].values[0]", language='python')
+    st.markdown('')
+    st.markdown(
 
+    
+    
+    
+    
+    
+    
+    
 if pages== 'Map' or pages == 'Economic change' or pages == 'Comparison disasters' or pages == 'The Big 4':
     with st.form(key='my_form'):
         commit = st.form_submit_button('Submit')
@@ -146,8 +155,6 @@ if pages== 'Map' or pages == 'Economic change' or pages == 'Comparison disasters
             type_names = list(rampen_df['Disaster Subtype'].unique())
             type_dict = dict(zip(types, type_names))
             type_box=st.selectbox('Choose a subtype', types)
-            
-            Outlier_box = st.selectbox('Remove outliers', ['No', 'Yes'])
         if pages == 'The Big 4':
             categories = ['Categorie 1', 'Categorie 2', 'Categorie 3']
             category= ['Category 1', 'Category 2', 'Category 3']
@@ -186,7 +193,7 @@ if pages == 'Map':
 
 
 if pages == 'Economic change':
-    col5, col6 = st.columns([1,1])
+    col5, col6 = st.columns([2,2])
     land = landen_box
     check = rampen_df[rampen_df['Country']==landen_box]
     check = check[check['Year']==jaar]
@@ -215,12 +222,23 @@ if pages == 'Economic change':
     
     grafiek_max_jaar = jaar+5
     grafiek_min_jaar = jaar-2
+        
     GDP_grafiek = GDP.drop(['Country Name', 'Indicator Name', 'Indicator Code'], axis=1)
     GDP_grafiek = GDP_grafiek.set_index('Country Code').T.rename(pd.to_numeric).reset_index()
+    GDP_grafiek2 = GDP_grafiek[(GDP_grafiek['index']>=grafiek_percent_jaar) & (GDP_grafiek['index']<=grafiek_max_jaar)]
     GDP_grafiek = GDP_grafiek[(GDP_grafiek['index']>=grafiek_min_jaar) & (GDP_grafiek['index']<=grafiek_max_jaar)]
+
     GDP_grafiek = GDP_grafiek.rename(columns={'index':'Year'}, index={'Country Code':'Index'})
-    GDP_land = GDP_grafiek[['Year', land_code, 'WLD']]
-    with col5:
+    GDP_grafiek2 = GDP_grafiek2.rename(columns={'index':'Year'}, index={'Country Code':'Index'})
+    GDP_land = GDP_grafiek[['Year', land_code, 'WLD']].reset_index(drop=True)
+    GDP_land2 = GDP_grafiek2[['Year', land_code, 'WLD']].reset_index(drop=True)
+
+    GDP_land['percent'] = 0
+    for index, row in GDP_land.iterrows():
+        GDP_land['percent'].iloc[index] = (GDP_land2[land_code].iloc[index+1]-GDP_land2[land_code].iloc[index])/GDP_land2[land_code].iloc[index]-\
+        (GDP_land2['WLD'].iloc[index+1]-GDP_land2['WLD'].iloc[index])/GDP_land2['WLD'].iloc[index]
+        
+    with col6:
         GDP_land
 
     GDP_fig = make_subplots(specs=[[{"secondary_y": True}]])
@@ -235,8 +253,16 @@ if pages == 'Economic change':
     GDP_fig.update_xaxes(title_text="<b>2 years before and 5 years after chosen year</b>")
     GDP_fig.update_yaxes(title_text='<b>GDP ' + landen_box + '</b>', secondary_y=False)
     GDP_fig.update_yaxes(title_text='<b>GDP world</b>', secondary_y=True)
-    with col6:
+    with col5:
         st.plotly_chart(GDP_fig)
+    
+   
+    #scatter
+    scatter_df = rampen_df[rampen_df['ISO']==land_code]
+    scatter_df = scatter_df[(scatter_df['Year']>=grafiek_min_jaar) & (scatter_df['Year']<=grafiek_max_jaar)]
+    scatter_graph = px.scatter(x=scatter_df['Year'], y=scatter_df['Intensity'])
+    with col6:
+        st.plotly_chart(scatter_graph)
 
 
 
