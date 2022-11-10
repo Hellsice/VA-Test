@@ -143,7 +143,7 @@ if pages == 'Map':
         df_adjusted = rampen_df_affected
 
     map = px.choropleth_mapbox(df_adjusted, geojson=df_adjusted.geometry, locations=df_adjusted.index, color=jaar, mapbox_style="open-street-map",
-                          hover_name=df_adjusted.Country, zoom=1)    
+                          hover_name=df_adjusted.Country, zoom=1, height=800)    
     st.plotly_chart(map, use_container_width=True)
 
 
