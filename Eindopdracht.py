@@ -230,7 +230,7 @@ if pages == 'Map':
     map = px.choropleth_mapbox(df_adjusted, geojson=df_adjusted.geometry, locations=df_adjusted.index, color=jaar, mapbox_style="open-street-map",
                           hover_name=df_adjusted.Country, zoom=1, height=800)
     map.update_layout(
-        title_text="""      ##>Highest disaster intensity for each country in """+str(jaar) +"""</b>""")
+        title_text="""<b>Highest disaster intensity for each country in """+str(jaar) +"""</b>""", title_x=0.5)
     st.plotly_chart(map, use_container_width=True)
     
     st.title('Map specific code')
@@ -307,7 +307,7 @@ if pages == 'Economic change':
         go.Line(x=GDP_grafiek['Year'].to_list(), y=GDP_grafiek[land_code].to_list(), name=landen_box),
         secondary_y=False)
     GDP_fig.update_layout(
-        title_text="<b>GDP comparison of world vs. " + landen_box +'</b>')
+        title_text="<b>GDP comparison of world vs. " + landen_box +'</b>', title_x=0.5)
     GDP_fig.update_xaxes(title_text="<b>2 years before and 5 years after chosen year</b>")
     GDP_fig.update_yaxes(title_text='<b>GDP ' + landen_box + '</b>', secondary_y=False)
     GDP_fig.update_yaxes(title_text='<b>GDP world</b>', secondary_y=True)
@@ -324,7 +324,7 @@ if pages == 'Economic change':
                                yaxis_range=[-0.05,0.5])
     scatter_graph.update_xaxes(title_text="<b>2 years before and 5 years after chosen year</b>")
     scatter_graph.update_yaxes(title_text="<b>Intensity of disasters within year range</b>")
-    scatter_graph.update_layout(title = '       Disaster occurences')
+    scatter_graph.update_layout(title = 'Disaster occurences', title_x=0.5)
 
     with col8:
         st.plotly_chart(scatter_graph)
@@ -332,7 +332,7 @@ if pages == 'Economic change':
     percentage_fig = px.line(GDP_land, x='Year', y='Percent')
     percentage_fig.update_xaxes(title_text="<b>2 years before and 5 years after chosen year</b>")
     percentage_fig.update_yaxes(title_text="<b>Percentage</b>")
-    percentage_fig.update_layout(title="        <b>Difference in growth percentage of " + landen_box + ' compared to the world</b>')
+    percentage_fig.update_layout(title="<b>Difference in growth percentage of " + landen_box + ' compared to the world</b>', title_x=0.5)
     percentage_fig.add_hline(y=0)
     with col6:
         st.plotly_chart(percentage_fig)
