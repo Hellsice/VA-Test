@@ -91,7 +91,7 @@ if pages== 'Map' or pages == 'Economic change' or pages == 'Comparison disasters
             type_names = list(rampen_df['Disaster Subtype'].unique())
             type_dict = dict(zip(types, type_names))
             type_box=st.selectbox('Kies een subtype', types)
-         if pages == 'The Big 4':
+        if pages == 'The Big 4':
             categories = ['Categorie 1', 'Categorie 2', 'Categorie 3']
             category= ['Category 1', 'Category 2', 'Category 3']
             category_dict = dict(zip(categories, category))
