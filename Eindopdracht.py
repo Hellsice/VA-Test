@@ -262,6 +262,10 @@ if pages == 'Economic change':
     scatter_df = rampen_df[rampen_df['ISO']==land_code]
     scatter_df = scatter_df[(scatter_df['Year']>=grafiek_min_jaar) & (scatter_df['Year']<=grafiek_max_jaar)]
     scatter_graph = px.scatter(x=scatter_df['Year'], y=scatter_df['Intensity'])
+    scatter_graph.update_traces(marker=dict(size=12,
+                              line=dict(width=2,
+                                        color='Red')),
+                  selector=dict(mode='markers'))
     with col6:
         st.plotly_chart(scatter_graph)
 
