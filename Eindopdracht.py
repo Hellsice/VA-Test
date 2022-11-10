@@ -51,9 +51,9 @@ if pages == 'Sources':
 
 if pages == 'Data cleaning':
     st.markdown("Data retrieved via API's")
-    st.code("response = requests.get('https://api.worldbank.org/v2/en/indicator/NY.GDP.MKTP.CD?downloadformat=excel') /n\
-            output = open('GDP.xls', 'wb')/n\
-            output.write(response.content)/n\
+    st.code("response = requests.get('https://api.worldbank.org/v2/en/indicator/NY.GDP.MKTP.CD?downloadformat=excel') \n\
+            output = open('GDP.xls', 'wb')\n\
+            output.write(response.content)\n\
             output.close()", language='python')
     st.markdown('')
     st.markdown('Cleaning disaster data')
