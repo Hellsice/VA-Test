@@ -50,13 +50,13 @@ if pages == 'Sources':
 
 
 if pages == 'General code':
+    st.title('General Code')
     st.markdown("Data retrieved via API's")
     st.code("response = requests.get('https://api.worldbank.org/v2/en/indicator/NY.GDP.MKTP.CD?downloadformat=excel') \n\
 output = open('GDP.xls', 'wb')\n\
 output.write(response.content)\n\
 output.close()", language='python')
     st.markdown('')
-    st.title('General Code')
     st.markdown('Removed unnecessary years.')
     st.code('rampen_df = rampen_df[rampen_df.Year >= 1961].reset_index(drop=True).fillna(0)\n\
 rampen_df = rampen_df[rampen_df.Year <= 2021].reset_index(drop=True).fillna(0)', language='python')
@@ -90,7 +90,7 @@ GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index])].values[0]''', lan
     st.markdown('Calculating intensity using the following formula:')
     st.markdown(r'''
 $$ 
-Intensity = \frac{Deaths + 0.3*Total\_\affected}{Population} 
+Intensity = \frac{Deaths + 0.3*Total\_affected}{Population} 
 $$
 ''')
     st.code('''rampen_df['Intensity'] = 0
