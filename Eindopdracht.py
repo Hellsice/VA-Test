@@ -69,11 +69,13 @@ rampen_df_controle2 = rampen_df.groupby(['ISO', 'Country', 'Year', 'Disaster Gro
        'Disaster Subtype'])['Total Deaths'].sum().reset_index()", language='python')
     st.markdown('')
     st.markdown('Determined GDP percentage change compared to the world.')
-    st.code("rampen_df.iloc[index, rampen_df.columns.get_loc('Jaar 0')] = \n\
-    (GDP[GDP['Country Code']==rampen_df['ISO'][index]][str(rampen_df['Year'][index])].values[0] - GDP[GDP['Country Code']==rampen_df['ISO'][index]][str(rampen_df['Year'][index]-1)].values[0])/\n\
-    GDP[GDP['Country Code']==rampen_df['ISO'][index]][str(rampen_df['Year'][index]-1)].values[0]\n\
-    - (GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index])].values[0] - GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index]-1)].values[0])/\n\
-    GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index]-1)].values[0]", language='python')
+    st.code('''rampen_df.iloc[index, rampen_df.columns.get_loc('Jaar 1')] = \\
+            (GDP[GDP['Country Code']==rampen_df['ISO'][index]][str(rampen_df['Year'][index]+1)].values[0]\\
+             - GDP[GDP['Country Code']==rampen_df['ISO'][index]][str(rampen_df['Year'][index])].values[0])/\\
+            GDP[GDP['Country Code']==rampen_df['ISO'][index]][str(rampen_df['Year'][index])].values[0]\\
+            - (GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index]+1)].values[0]\\
+             - GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index])].values[0])/\\
+            GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index])].values[0]''', language='python')
     st.code("rampen_df['Jaar 0']=rampen_df['Jaar 0']*100", language='python')
     st.markdown('')
     st.markdown("Making a submit button that's shared across different pages.")
@@ -88,7 +90,7 @@ rampen_df_controle2 = rampen_df.groupby(['ISO', 'Country', 'Year', 'Disaster Gro
     st.markdown('Calculating intensity using the following formula:')
     st.markdown(r'''
 $$ 
-Intensity = \frac{Deaths + 0.3*Total_affected}{Population} 
+Intensity = \frac{Deaths + 0.3*Total\_\affected}{Population} 
 $$
 ''')
     st.code('''rampen_df['Intensity'] = 0
