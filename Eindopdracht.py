@@ -7,6 +7,7 @@ import numpy as np
 import streamlit as st
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
+import math
 
 
 st.set_page_config(layout="wide", page_title='Disaster influence on economy', initial_sidebar_state='expanded')
@@ -36,7 +37,8 @@ df = countries_geojson.merge(GDP, left_on='ISO_A3', right_on='Country Code', how
 rampen_df = pd.read_csv('rampen_df.csv')
 
 if pages == 'Home':
-    st.markdown('Gemaakt door Bart Sil Combee')
+    st.subheader('Gemaakt door Bart Sil Combee')
+    st.markdown('Visual Analytics Final project, November 2022')
     st.image('disasters.png')
     
     
@@ -51,7 +53,7 @@ if pages == 'Sources':
 
 if pages == 'General code':
     st.title('General Code')
-    st.markdown("Data retrieved via API's")
+    st.markdown("Data retrieved via API's.")
     st.code("response = requests.get('https://api.worldbank.org/v2/en/indicator/NY.GDP.MKTP.CD?downloadformat=excel') \n\
 output = open('GDP.xls', 'wb')\n\
 output.write(response.content)\n\
@@ -238,10 +240,10 @@ if pages == 'Map':
     st.code('''if pages == 'Map':
     Soort_data = st.selectbox('Select data type', ['Intensity', 'Affected'])''', language='python')
     st.markdown('')
-    st.markdown('Filtered the dataset based on the selectbox choice. Intensity used max value, Affected used sum.')
+    st.markdown('Filtered the dataset based on the selectbox choice.')
     st.code('''rampen_df_intensity = rampen_df.groupby(['ISO', 'Country', 'Year'])['Intensity'].max().to_frame().reset_index()
 rampen_df_affected = rampen_df.groupby(['ISO', 'Country', 'Year'])['Total Affected new'].sum().to_frame().reset_index()''', language='python')
-    st.markdown('Pivot data and remove NaN values.')
+    st.markdown('Pivot data and rplace NaN values with 0.')
     st.code('''rampen_df_intensity = rampen_df_intensity.pivot_table(index=['ISO', 'Country'], columns='Year', values='Intensity').reset_index()
 rampen_df_intensity.index.name = rampen_df_intensity.columns.name = None
 rampen_df_intensity = rampen_df_intensity.fillna(0)''', language='python')
@@ -309,8 +311,8 @@ if pages == 'Economic change':
     GDP_fig.update_layout(
         title_text="<b>GDP comparison of world vs. " + landen_box +'</b>', title_x=0.3)
     GDP_fig.update_xaxes(title_text="<b>2 years before and 5 years after chosen year</b>")
-    GDP_fig.update_yaxes(title_text='<b>GDP ' + landen_box + '</b>', secondary_y=False)
-    GDP_fig.update_yaxes(title_text='<b>GDP world</b>', secondary_y=True)
+    GDP_fig.update_yaxes(title_text='<b>GDP ' + landen_box + ' in USD</b>', secondary_y=False)
+    GDP_fig.update_yaxes(title_text='<b>GDP world in USD</b>', secondary_y=True)
     
     with col7:
         st.plotly_chart(GDP_fig)
@@ -322,7 +324,7 @@ if pages == 'Economic change':
     scatter_graph = px.scatter(x=scatter_df['Year'], y=scatter_df['Intensity'])
     scatter_graph.update_traces(marker=dict(size=12, color='Red'))
     scatter_graph.update_layout(xaxis_range=[grafiek_min_jaar-0.25,grafiek_max_jaar+0.25],
-                               yaxis_range=[-0.05,0.5])
+                               yaxis_range=[-0.05,math.ceil(rampen_df['Intensity'].max()*10)/10])
     scatter_graph.update_xaxes(title_text="<b>2 years before and 5 years after chosen year</b>")
     scatter_graph.update_yaxes(title_text="<b>Intensity of disasters within year range</b>")
     scatter_graph.update_layout(title = '<b>Disaster occurences</b>', title_x=0.5)
