@@ -19,7 +19,7 @@ import plotly.graph_objects as go
 st.set_page_config(layout="wide", page_title='Disaster influence on economy', initial_sidebar_state='expanded')
 st.title('Disaster influence on economy')
 st.sidebar.title('Navigation')
-# pages = st.sidebar.radio('Pages', options=['Home', 'Data cleaning', 'Map', 'Economic change', 'Comparison disasters'])
+pages = st.sidebar.radio('Pages', options=['Home', 'Data cleaning', 'Map', 'Economic change', 'Comparison disasters'])
 
 countries_geojson = gpd.read_file('countries.geojson')
 GDP = pd.read_excel('GDP.xls', skiprows=[0,1,2], engine='xlrd')
@@ -43,7 +43,7 @@ rampen_df = pd.read_csv('rampen_df.csv')
 # In[6]:
 
 with st.form(key='my_form'):
-    with st.siderbar:
+    if pages == 'Map'
         st.markdown('##')
         Total_affected_mult = st.slider('Set the total affected multiplier',min_value=0.0, value=0.3 ,max_value=1.0, step=0.01)
         Intensity_threshold = st.number_input('Set the intensity threshold (default: 0.00001)', min_value=0.0, value=0.00001, max_value=1.0, step=0.00001)
