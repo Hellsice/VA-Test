@@ -12,7 +12,7 @@ import plotly.graph_objects as go
 st.set_page_config(layout="wide", page_title='Disaster influence on economy', initial_sidebar_state='expanded')
 st.title('Disaster influence on economy')
 st.sidebar.title('Navigation')
-pages = st.sidebar.radio('Pages', options=['Home', 'Data cleaning', 'Map', 'Economic change', 'Comparison disasters', 'The Big 4'])
+pages = st.sidebar.radio('Pages', options=['Home', 'Data cleaning', 'Map', 'Economic change', 'Comparison disasters', 'The Big 4', 'Sources'])
 
 od.download('https://datahub.io/core/geo-countries/r/countries.geojson')
 countries_geojson = gpd.read_file('countries.geojson')
@@ -38,7 +38,15 @@ rampen_df = pd.read_csv('rampen_df.csv')
 if pages == 'Home':
     st.markdown('Gemaakt door Bart Sil Combee')
     st.image('disasters.png')
-
+    
+    
+if pages == 'Sources':
+    st.markdown('Data sources:')
+    st.markdown('Population: api.worldbank.org, https://data.worldbank.org/indicator/NY.GDP.MKTP.CD')
+    st.markdown('GDP: api.worldbank.org, https://data.worldbank.org/indicator/SP.POP.TOTL')
+    st.markdown('Disaster Data: EMDAT-public, https://public.emdat.be/data')
+    st.markdown('Geodata: datahub, https://datahub.io/core/geo-countries')
+    st.markdown('Formula for Intensity: "The Growth Aftermath of Natural Disasters" by Thomas Fomby, Yuki Ikeda and Norman Loayza')
 
 
 
