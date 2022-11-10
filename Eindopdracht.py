@@ -56,7 +56,7 @@ if pages== 'Map' or pages == 'Economic change' or pages == 'Comparison disasters
             landen_box = st.selectbox('Choose a country', landen_naam)
             land_code= landen_dict[landen_box]
         if pages == 'Comparison disasters':
-            types = list(rampen_df['Disaster Subtype'].unique())  
+            types = np.sort(list(rampen_df['Disaster Subtype'].unique()))  
             type_names = list(rampen_df['Disaster Subtype'].unique())
             type_dict = dict(zip(types, type_names))
             type_box=st.selectbox('Kies een subtype', types)
