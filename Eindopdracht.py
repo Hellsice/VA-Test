@@ -52,14 +52,14 @@ if pages == 'Sources':
 if pages == 'Data cleaning':
     st.markdown("Data retrieved via API's")
     st.code("response = requests.get('https://api.worldbank.org/v2/en/indicator/NY.GDP.MKTP.CD?downloadformat=excel') \n\
-            output = open('GDP.xls', 'wb')\n\
-            output.write(response.content)\n\
-            output.close()", language='python')
+output = open('GDP.xls', 'wb')\n\
+output.write(response.content)\n\
+output.close()", language='python')
     st.markdown('')
     st.markdown('Cleaning disaster data')
     st.markdown('filtered by year')
-    st.code('rampen_df = rampen_df[rampen_df.Year >= 1961].reset_index(drop=True).fillna(0)/n\
-             rampen_df = rampen_df[rampen_df.Year <= 2021].reset_index(drop=True).fillna(0)', language='python')
+    st.code('rampen_df = rampen_df[rampen_df.Year >= 1961].reset_index(drop=True).fillna(0)\n\
+rampen_df = rampen_df[rampen_df.Year <= 2021].reset_index(drop=True).fillna(0)', language='python')
 
 if pages== 'Map' or pages == 'Economic change' or pages == 'Comparison disasters' or pages == 'The Big 4':
     with st.form(key='my_form'):
