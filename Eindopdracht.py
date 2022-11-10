@@ -237,7 +237,8 @@ if pages == 'Map':
     Soort_data = st.selectbox('Select data type', ['Intensity', 'Affected'])''', language='python')
     st.markdown('')
     st.markdown('Filtered the dataset based on the selectbox choice. Intensity used max value, Affected used sum.')
-    st.code('''rampen_df_intensity = rampen_df.groupby(['ISO', 'Country', 'Year'])['Intensity'].max().to_frame().reset_index()''', language='python')
+    st.code('''rampen_df_intensity = rampen_df.groupby(['ISO', 'Country', 'Year'])['Intensity'].max().to_frame().reset_index()
+rampen_df_affected = rampen_df.groupby(['ISO', 'Country', 'Year'])['Total Affected new'].sum().to_frame().reset_index()''', language='python')
     st.markdown('Pivot data and remove NaN values.')
     st.code('''rampen_df_intensity = rampen_df_intensity.pivot_table(index=['ISO', 'Country'], columns='Year', values='Intensity').reset_index()
 rampen_df_intensity.index.name = rampen_df_intensity.columns.name = None
