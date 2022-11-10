@@ -89,8 +89,8 @@ test = rampen_df.merge(quantiles, left_on=['Disaster Group', 'Disaster Subgroup'
 test.columns = ['Year','ISO','Country','Disaster Group','Disaster Subgroup','Disaster Type',
                 'Disaster Subtype','Total Deaths','Total Affected new','Intensity','Jaar 0','Jaar 1','Jaar 2','Jaar 3',"0.25",'0.75']
 test['Category']=0
-    for index, row in test.iterrows():
-        test.iloc[index, test.columns.get_loc('Category')] = 3 if row['Intensity']>row['0.75'] else (1 if row['Intensity']<row['0.25'] else 2)
+for index, row in test.iterrows():
+    test.iloc[index, test.columns.get_loc('Category')] = 3 if row['Intensity']>row['0.75'] else (1 if row['Intensity']<row['0.25'] else 2)
 rampen_df['Category'] = test['Category']
 
 rampen_df = rampen_df.sort_values(by='Year').reset_index(drop=True)
