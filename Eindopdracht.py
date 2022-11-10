@@ -230,7 +230,7 @@ if pages == 'Map':
     map = px.choropleth_mapbox(df_adjusted, geojson=df_adjusted.geometry, locations=df_adjusted.index, color=jaar, mapbox_style="open-street-map",
                           hover_name=df_adjusted.Country, zoom=1, height=800)
     map.update_layout(
-        title_text="<b>Highest disaster intensity for each country in " + str(jaar) +'</b>')
+        title_text="            ##<b>Highest disaster intensity for each country in " + str(jaar) +'</b>')
     st.plotly_chart(map, use_container_width=True)
     
     st.title('Map specific code')
@@ -324,15 +324,15 @@ if pages == 'Economic change':
                                yaxis_range=[-0.05,0.5])
     scatter_graph.update_xaxes(title_text="<b>2 years before and 5 years after chosen year</b>")
     scatter_graph.update_yaxes(title_text="<b>Intensity of disasters within year range</b>")
-    scatter_graph.update_layout(title = 'Disaster occurences')
+    scatter_graph.update_layout(title = '       Disaster occurences')
 
     with col8:
         st.plotly_chart(scatter_graph)
         
     percentage_fig = px.line(GDP_land, x='Year', y='Percent')
     percentage_fig.update_xaxes(title_text="<b>2 years before and 5 years after chosen year</b>")
-    percentage_fig.update_yaxes(title_text="Percentage")
-    percentage_fig.update_layout(title="<b>Difference in growth percentage of " + landen_box + ' compared to the world</b>')
+    percentage_fig.update_yaxes(title_text="<b>Percentage</b>")
+    percentage_fig.update_layout(title="        <b>Difference in growth percentage of " + landen_box + ' compared to the world</b>')
     percentage_fig.add_hline(y=0)
     with col6:
         st.plotly_chart(percentage_fig)
