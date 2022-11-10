@@ -373,7 +373,7 @@ GDP_land2 = GDP_grafiek2[['Year', land_code, 'WLD']].reset_index(drop=True)
 
 GDP_land['Percent'] = 0
 for index, row in GDP_land.iterrows():
-    GDP_land['Percent'].iloc[index] = (GDP_land2[land_code].iloc[index+1]-GDP_land2[land_code].iloc[index])/GDP_land2[land_code].iloc[index]-\
+    GDP_land['Percent'].iloc[index] = (GDP_land2[land_code].iloc[index+1]-GDP_land2[land_code].iloc[index])/GDP_land2[land_code].iloc[index]-
     (GDP_land2['WLD'].iloc[index+1]-GDP_land2['WLD'].iloc[index])/GDP_land2['WLD'].iloc[index]
 GDP_land['Percent'] = GDP_land['Percent']*100""", language='python')
 
