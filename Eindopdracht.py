@@ -66,7 +66,7 @@ if pages== 'Map' or pages == 'Economic change' or pages == 'Comparison disasters
             category_box = st.selectbox('Kies een Ramp categorie', categories)
   
 
-
+    round_mult = 100000
     rampen_df['Intensity'] = 0
     for i in range(len(rampen_df)):
         a = Population[Population['Country Code']==rampen_df['ISO'][i]]
