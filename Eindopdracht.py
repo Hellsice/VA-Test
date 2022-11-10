@@ -88,7 +88,7 @@ rampen_df_controle2 = rampen_df.groupby(['ISO', 'Country', 'Year', 'Disaster Gro
     st.markdown('Calculating intensity using the following formula:')
     st.markdown(r'''
 $$ 
-\Intensity = \frac{Deaths + 0.3*Total_affected}{Population} 
+Intensity = \frac{Deaths + 0.3*Total_affected}{Population} 
 $$
 ''')
     st.code('''rampen_df['Intensity'] = 0
@@ -103,7 +103,7 @@ for i in range(len(rampen_df)):
 ''', language='python')
     st.markdown('Merging dataframes and fixing column names.')
     st.code('''test2 = rampen_df.merge(quantiles_types, left_on=['Disaster Group', 'Disaster Subgroup', 'Disaster Type'], 
- right_on=['Disaster Group', 'Disaster Subgroup', 'Disaster Type'], how='left')
+                       right_on=['Disaster Group', 'Disaster Subgroup', 'Disaster Type'], how='left')
 test2.columns = ['Year','ISO','Country','Disaster Group','Disaster Subgroup','Disaster Type', 'Disaster Subtype','Total Deaths','Total Affected new','Intensity','Jaar 0','Jaar 1','Jaar 2','Jaar 3','0.25','0.75']''', language='python')
     st.markdown('Assigning category values to each disaster type and subtype.')
     st.code('''for index, row in rampen_df.iterrows():
