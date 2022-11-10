@@ -236,9 +236,9 @@ if pages == 'Economic change':
     GDP_land = GDP_grafiek[['Year', land_code, 'WLD']].reset_index(drop=True)
     GDP_land2 = GDP_grafiek2[['Year', land_code, 'WLD']].reset_index(drop=True)
 
-    GDP_land['percent'] = 0
+    GDP_land['Percent'] = 0
     for index, row in GDP_land.iterrows():
-        GDP_land['percent'].iloc[index] = (GDP_land2[land_code].iloc[index+1]-GDP_land2[land_code].iloc[index])/GDP_land2[land_code].iloc[index]-\
+        GDP_land['Percent'].iloc[index] = (GDP_land2[land_code].iloc[index+1]-GDP_land2[land_code].iloc[index])/GDP_land2[land_code].iloc[index]-\
         (GDP_land2['WLD'].iloc[index+1]-GDP_land2['WLD'].iloc[index])/GDP_land2['WLD'].iloc[index]
         
     with col5:
@@ -271,6 +271,11 @@ if pages == 'Economic change':
     scatter_graph.update_layout(showlegend=True)
     with col6:
         st.plotly_chart(scatter_graph)
+        
+        
+    percentage_fig = px.Line(x=GDP_grafiek['Year'], y=GDP_grafiek['Percent'])
+    with col5:
+        st.plotly_chart(percentage_fig)
 
 
 
