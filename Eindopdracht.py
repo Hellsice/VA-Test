@@ -214,8 +214,8 @@ if pages == 'Economic change':
                 a = 'In ' + str(jaar) + ' was er in ' + landen_box + ' een natuurramp met type: ' + type_rampen[i]\
                 +'.\nHiervan was de intensiteit: ' + str(round(intensiteit[i]*round_mult)/round_mult)
             else:
-                a = 'In ' + str(jaar) + ' was er in ' + landen_box + ' een natuurramp met type: ' + type_rampen[i] + ' en subtype ' + subtypen[i]\
-                +'.\nHiervan was de intensiteit: ' + str(round(intensiteit[i]*round_mult)/round_mult)
+                a = 'In ' + str(jaar) + ' was er in ' + landen_box + ' een natuurramp met type en subtype: ' + subtypen[i]\
+                +'.\n Hiervan was de intensiteit: ' + str(round(intensiteit[i]*round_mult)/round_mult)
             print(a)
             with col5:
                 st.markdown(a)
@@ -275,6 +275,8 @@ if pages == 'Economic change':
         st.plotly_chart(scatter_graph)
         
     percentage_fig = px.line(GDP_land, x='Year', y='Percent')
+    percentage_fig.update_xaxes(title_text="<b>2 years before and 5 years after chosen year</b>")
+    percentage_fig.update_yaxes(title_text="<b>Difference in growth percentage of " + landen_naam + 'compared to the world</b>' )
     with col6:
         st.plotly_chart(percentage_fig)
 
