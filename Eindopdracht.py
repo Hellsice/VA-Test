@@ -63,10 +63,8 @@ rampen_df = rampen_df[rampen_df.Year <= 2021].reset_index(drop=True).fillna(0)',
     st.markdown('')
     st.markdown('Recalculated deaths and total affected.')
     st.code("rampen_df['Total Affected new'] = rampen_df['No Affected']+rampen_df['No Injured']+rampen_df['No Homeless']\n\
-rampen_df_controle = rampen_df.groupby(['ISO', 'Country', 'Year', 'Disaster Group', 'Disaster Subgroup', 'Disaster Type',\n\
-       'Disaster Subtype'])['Total Affected new'].sum().reset_index()\n\
-rampen_df_controle2 = rampen_df.groupby(['ISO', 'Country', 'Year', 'Disaster Group', 'Disaster Subgroup', 'Disaster Type',\n\
-       'Disaster Subtype'])['Total Deaths'].sum().reset_index()", language='python')
+rampen_df_controle = rampen_df.groupby(['ISO', 'Country', 'Year', 'Disaster Group', 'Disaster Subgroup', 'Disaster Type', 'Disaster Subtype'])['Total Affected new'].sum().reset_index()\n\
+rampen_df_controle2 = rampen_df.groupby(['ISO', 'Country', 'Year', 'Disaster Group', 'Disaster Subgroup', 'Disaster Type', 'Disaster Subtype'])['Total Deaths'].sum().reset_index()", language='python')
     st.markdown('')
     st.markdown('Determined GDP percentage change compared to the world.')
     st.code('''rampen_df.iloc[index, rampen_df.columns.get_loc('Jaar 1')] = \\
@@ -90,7 +88,7 @@ GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index])].values[0]''', lan
     st.markdown('Calculating intensity using the following formula:')
     st.markdown(r'''
 $$ 
-Intensity = \frac{Deaths + 0.3*Total\_affected}{Population} 
+Intensity = \frac{Deaths + 0.3*Total\_Affected}{Population} 
 $$
 ''')
     st.code('''rampen_df['Intensity'] = 0
@@ -103,7 +101,7 @@ for i in range(len(rampen_df)):
     st.markdown('Calculating the quantiles of Disaster types and subtypes.')
     st.code('''quantiles_subtypes = rampen_df.groupby(['Disaster Group', 'Disaster Subgroup', 'Disaster Type','Disaster Subtype'])['Intensity'].quantile([0.25, 0.75]).reset_index()
 ''', language='python')
-    st.markdown('Pivoting quantiles dataframe')
+    st.markdown('Pivoting quantiles dataframe.')
     st.code('''quantiles_subtypes = quantiles_subtypes.pivot(index=['Disaster Group', 'Disaster Subgroup', 'Disaster Type','Disaster Subtype'], columns = 'level_4', values='Intensity').reset_index()''', language='python')
     st.markdown('Merging dataframes and fixing column names.')
     st.code('''test2 = rampen_df.merge(quantiles_types, left_on=['Disaster Group', 'Disaster Subgroup', 'Disaster Type'], 
