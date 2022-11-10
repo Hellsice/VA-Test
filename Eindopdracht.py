@@ -78,13 +78,7 @@ rampen_df_controle2 = rampen_df.groupby(['ISO', 'Country', 'Year', 'Disaster Gro
     st.markdown('')
     st.markdown('')
     st.markdown('Bepaling van intensiteit')
-    st.code('''rampen_df['Intensity'] = 0
-        for i in range(len(rampen_df)):
-            a = Population[Population['Country Code']==rampen_df['ISO'][i]]
-            if len(a) == 1:
-                rampen_df['Intensity'][i] = (rampen_df['Total Deaths'][i]+Total_affected_mult*rampen_df['Total Affected new'][i])/(a[str(rampen_df['Year'][i])].values[0])''', language='python'
-
-
+   
     
     
     
