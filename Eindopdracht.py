@@ -69,12 +69,9 @@ rampen_df_controle2 = rampen_df.groupby(['ISO', 'Country', 'Year', 'Disaster Gro
        'Disaster Subtype'])['Total Deaths'].sum().reset_index()", language='python')
     st.markdown('')
     st.markdown('Determined GDP% change compared to the world')
-    st.code("rampen_df.iloc[index, rampen_df.columns.get_loc('Jaar 0')] = \n\
-    (GDP[GDP['Country Code']==rampen_df['ISO'][index]][str(rampen_df['Year'][index])].values[0]\n\
-    - GDP[GDP['Country Code']==rampen_df['ISO'][index]][str(rampen_df['Year'][index]-1)].values[0])/\n\
-    GDP[GDP['Country Code']==rampen_df['ISO'][index]][str(rampen_df['Year'][index]-1)].values[0]\n\
-    - (GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index])].values[0]\n\
-    - GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index]-1)].values[0])/\n\
+    st.code("rampen_df.iloc[index, rampen_df.columns.get_loc('Jaar 0')] = (GDP[GDP['Country Code']==rampen_df['ISO'][index]][str(rampen_df['Year'][index])].values[0]\n\
+    - GDP[GDP['Country Code']==rampen_df['ISO'][index]][str(rampen_df['Year'][index]-1)].values[0])/GDP[GDP['Country Code']==rampen_df['ISO'][index]][str(rampen_df['Year'][index]-1)].values[0]\n\
+    - (GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index])].values[0] - GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index]-1)].values[0])/\n\
     GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index]-1)].values[0]", language='python')
 
 if pages== 'Map' or pages == 'Economic change' or pages == 'Comparison disasters' or pages == 'The Big 4':
