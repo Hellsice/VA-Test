@@ -62,29 +62,35 @@ if pages== 'Map' or pages == 'Economic change' or pages == 'Comparison disasters
 
 
         quantiles_subtypes = rampen_df.groupby(['Disaster Group', 'Disaster Subgroup', 'Disaster Type','Disaster Subtype'])['Intensity'].quantile([0.25, 0.75]).reset_index()
-        quantiles_types = rampen_df.groupby(['Disaster Group', 'Disaster Subgroup', 'Disaster Type'])['Intensity'].quantile([0.25, 0.75]).reset_index(drop=True)
         quantiles_subtypes = quantiles_subtypes.pivot(index=['Disaster Group', 'Disaster Subgroup', 'Disaster Type','Disaster Subtype'], 
-                                    columns = 'level_4', values='Intensity').reset_index()
-        quantiles_types = quantiles_types.pivot(index=['Disaster Group', 'Disaster Subgroup', 'Disaster Type'], 
                                     columns = 'level_4', values='Intensity').reset_index()
         test = rampen_df.merge(quantiles_subtypes, left_on=['Disaster Group', 'Disaster Subgroup', 'Disaster Type','Disaster Subtype'], 
                                right_on=['Disaster Group', 'Disaster Subgroup', 'Disaster Type','Disaster Subtype'], how='left')
-        test2 = rampen_df.merge(quantiles_types, left_on=['Disaster Group', 'Disaster Subgroup', 'Disaster Type'], 
-                               right_on=['Disaster Group', 'Disaster Subgroup', 'Disaster Type'], how='left')
         test.columns = ['Year','ISO','Country','Disaster Group','Disaster Subgroup','Disaster Type',
                         'Disaster Subtype','Total Deaths','Total Affected new','Intensity','Jaar 0','Jaar 1','Jaar 2','Jaar 3',"0.25",'0.75']
-        test2.columns = ['Year','ISO','Country','Disaster Group','Disaster Subgroup','Disaster Type',
-                        'Total Deaths','Total Affected new','Intensity','Jaar 0','Jaar 1','Jaar 2','Jaar 3',"0.25",'0.75']
-        test2['Category Types']=0
         test['Category Subtypes']=0
         for index, row in test.iterrows():
             test.iloc[index, test.columns.get_loc('Category Subtypes')] = 3 if row['Intensity']>row['0.75'] else (1 if row['Intensity']<row['0.25'] else 2)
-        rampen_df['Category Subtypes'] = test['Category Subtypes']
+
+        
+        
+        quantiles_types = rampen_df.groupby(['Disaster Group', 'Disaster Subgroup', 'Disaster Type'])['Intensity'].quantile([0.25, 0.75]).reset_index()
+        quantiles_types = quantiles_types.pivot(index=['Disaster Group', 'Disaster Subgroup', 'Disaster Type'], 
+                                    columns = 'level_3', values='Intensity').reset_index()
+        test2 = rampen_df.merge(quantiles_types, left_on=['Disaster Group', 'Disaster Subgroup', 'Disaster Type'], 
+                               right_on=['Disaster Group', 'Disaster Subgroup', 'Disaster Type'], how='left')
+        test2.columns = ['Year','ISO','Country','Disaster Group','Disaster Subgroup','Disaster Type', 'Disaster Subtype',
+                 'Total Deaths','Total Affected new','Intensity','Jaar 0','Jaar 1','Jaar 2','Jaar 3',"0.25",'0.75']
+        test2['Category Types']=0
         for index, row in test2.iterrows():
             test2.iloc[index, test2.columns.get_loc('Category Types')] = 3 if row['Intensity']>row['0.75'] else (1 if row['Intensity']<row['0.25'] else 2)
+        
+        
         rampen_df['Category Types'] = test2['Category Types']
-
+        rampen_df['Category Subtypes'] = test['Category Subtypes']
         rampen_df = rampen_df.sort_values(by='Year').reset_index(drop=True)
+        
+        
         
         if pages == 'Map':
             Soort_data = ''
@@ -239,17 +245,17 @@ if pages == 'Comparison disasters':
 
 if pages == 'The Big 4':
     if category_dict[category_box] == 'Category 1':
-        Category_data = rampen_df[(rampen_df['Category']==1)]
+        Category_data = rampen_df[(rampen_df['Category Types']==1)]
         Category_data = Category_data[(Category_data['Disaster Type']=='Drought') | (Category_data['Disaster Type']=='Flood') | (Category_data['Disaster Type']=='Storm') | (Category_data['Disaster Type']=='Earthquake')]
         Category_data = Category_data.dropna(axis=0)
         Category_data = Category_data.sort_values(by='Disaster Type').reset_index(drop=True)
     elif category_dict[category_box] == 'Category 2':
-        Category_data = rampen_df[(rampen_df['Category']==2)]
+        Category_data = rampen_df[(rampen_df['Category Types']==2)]
         Category_data = Category_data[(Category_data['Disaster Type']=='Drought') | (Category_data['Disaster Type']=='Flood') | (Category_data['Disaster Type']=='Storm') | (Category_data['Disaster Type']=='Earthquake')]
         Category_data = Category_data.dropna(axis=0)
         Category_data = Category_data.sort_values(by='Disaster Type').reset_index(drop=True)
     elif category_dict[category_box] == 'Category 3':
-        Category_data = rampen_df[(rampen_df['Category']==3)]
+        Category_data = rampen_df[(rampen_df['Category Types']==3)]
         Category_data = Category_data[(Category_data['Disaster Type']=='Drought') | (Category_data['Disaster Type']=='Flood') | (Category_data['Disaster Type']=='Storm') | (Category_data['Disaster Type']=='Earthquake')]
         Category_data = Category_data.dropna(axis=0)
         Category_data = Category_data.sort_values(by='Disaster Type').reset_index(drop=True)
