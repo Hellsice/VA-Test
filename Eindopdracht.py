@@ -108,7 +108,15 @@ test2.columns = ['Year','ISO','Country','Disaster Group','Disaster Subgroup','Di
 rampen_df = rampen_df.sort_values(by='Year').reset_index(drop=True)''', language='python')
     
 
-    st.markdown(' 	\frac{n!}{k!(n-k)!}')
+    st.markdown(r'''
+## Latex example
+### full equation 
+$$ 
+\Delta G = \Delta\sigma \frac{a}{b} 
+$$ 
+### inline
+Assume $\frac{a}{b}=1$ and $\sigma=0$...  
+''')
 
    
     
