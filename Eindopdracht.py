@@ -198,9 +198,7 @@ if pages== 'Map' or pages == 'Economic change' or pages == 'Comparison disasters
             type_dict = dict(zip(types, type_names))
             type_box=st.selectbox('Choose a subtype', types)
         if pages == 'The Big 4':
-            categories = ['Categorie 1', 'Categorie 2', 'Categorie 3']
-            category= ['Category 1', 'Category 2', 'Category 3']
-            category_dict = dict(zip(categories, category))
+            categories = ['Category 1', 'Category 2', 'Category 3']
             category_box = st.selectbox('Choose a disaster category', categories)
   
                
@@ -442,17 +440,17 @@ data_subtypes_jaar_2 = data_subtypes[data_subtypes['Jaar 2']!=0].sort_values(by=
 data_subtypes_jaar_3 = data_subtypes[data_subtypes['Jaar 3']!=0].sort_values(by='Category Subtypes')""", language='python')
 
 if pages == 'The Big 4':
-    if category_dict[category_box] == 'Category 1':
+    if category_box == 'Category 1':
         Category_data = rampen_df[(rampen_df['Category Types']==1)]
         Category_data = Category_data[(Category_data['Disaster Type']=='Drought') | (Category_data['Disaster Type']=='Flood') | (Category_data['Disaster Type']=='Storm') | (Category_data['Disaster Type']=='Earthquake')]
         Category_data = Category_data.dropna(axis=0)
         Category_data = Category_data.sort_values(by='Disaster Type').reset_index(drop=True)
-    elif category_dict[category_box] == 'Category 2':
+    elif category_box == 'Category 2':
         Category_data = rampen_df[(rampen_df['Category Types']==2)]
         Category_data = Category_data[(Category_data['Disaster Type']=='Drought') | (Category_data['Disaster Type']=='Flood') | (Category_data['Disaster Type']=='Storm') | (Category_data['Disaster Type']=='Earthquake')]
         Category_data = Category_data.dropna(axis=0)
         Category_data = Category_data.sort_values(by='Disaster Type').reset_index(drop=True)
-    elif category_dict[category_box] == 'Category 3':
+    elif category_box == 'Category 3':
         Category_data = rampen_df[(rampen_df['Category Types']==3)]
         Category_data = Category_data[(Category_data['Disaster Type']=='Drought') | (Category_data['Disaster Type']=='Flood') | (Category_data['Disaster Type']=='Storm') | (Category_data['Disaster Type']=='Earthquake')]
         Category_data = Category_data.dropna(axis=0)
