@@ -42,11 +42,10 @@ rampen_df = pd.read_csv('rampen_df.csv')
 
 # In[6]:
 
-if pages== 'Map' or 'Economic change' or 'Comparison disasters':
-    with st.form(key='my_form'):
-        Total_affected_mult = st.slider('Set the total affected multiplier',min_value=0.0, value=0.3 ,max_value=1.0, step=0.01)
-        Intensity_threshold = st.number_input('Set the intensity threshold (default: 0.00001)', min_value=0.0, value=0.00001, max_value=1.0, step=0.00001)
-        jaar = st.slider('Select year',min_value=1961, value=2018 ,max_value=2018)
-        commit = st.form_submit_button('Submit')
+with st.form(key='my_form'):
+    Total_affected_mult = st.slider('Set the total affected multiplier',min_value=0.0, value=0.3 ,max_value=1.0, step=0.01)
+    Intensity_threshold = st.number_input('Set the intensity threshold (default: 0.00001)', min_value=0.0, value=0.00001, max_value=1.0, step=0.00001)
+    jaar = st.slider('Select year',min_value=1961, value=2018 ,max_value=2018)
+    commit = st.form_submit_button('Submit')
 
     
