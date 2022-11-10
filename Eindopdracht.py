@@ -12,7 +12,7 @@ import plotly.graph_objects as go
 st.set_page_config(layout="wide", page_title='Disaster influence on economy', initial_sidebar_state='expanded')
 st.title('Disaster influence on economy')
 st.sidebar.title('Navigation')
-pages = st.sidebar.radio('Pages', options=['Home', 'Data cleaning', 'Map', 'Economic change', 'Comparison disasters'])
+pages = st.sidebar.radio('Pages', options=['Home', 'Data cleaning', 'Map', 'Economic change', 'Comparison disasters', 'The Big 4'])
 
 od.download('https://datahub.io/core/geo-countries/r/countries.geojson')
 countries_geojson = gpd.read_file('countries.geojson')
@@ -38,7 +38,7 @@ rampen_df = pd.read_csv('rampen_df.csv')
 
 pages = 'Comparison disasters'
 
-if pages== 'Map' or pages == 'Economic change' or pages == 'Comparison disasters':
+if pages== 'Map' or pages == 'Economic change' or pages == 'Comparison disasters' or pages == 'The Big 4':
     with st.form(key='my_form'):
         commit = st.form_submit_button('Submit')
         Total_affected_mult = st.slider('Set the total affected multiplier',min_value=0.0, value=0.3 ,max_value=1.0, step=0.01)
@@ -91,6 +91,7 @@ if pages== 'Map' or pages == 'Economic change' or pages == 'Comparison disasters
             type_names = list(rampen_df['Disaster Subtype'].unique())
             type_dict = dict(zip(types, type_names))
             type_box=st.selectbox('Kies een subtype', types)
+         if pages == 'The Big 4':
             categories = ['Categorie 1', 'Categorie 2', 'Categorie 3']
             category= ['Category 1', 'Category 2', 'Category 3']
             category_dict = dict(zip(categories, category))
@@ -225,7 +226,7 @@ if pages == 'Comparison disasters':
     
 
 
-    
+if pages == 'The Big 4':    
     if category_dict[category_box] == 'Category 1':
         Category_data = rampen_df[(rampen_df['Category']==1)]
         Category_data = Category_data[(Category_data['Disaster Type']=='Drought') | (Category_data['Disaster Type']=='Flood') | (Category_data['Disaster Type']=='Storm') | (Category_data['Disaster Type']=='Earthquake')]
