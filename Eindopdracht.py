@@ -229,6 +229,8 @@ if pages == 'Map':
 
     map = px.choropleth_mapbox(df_adjusted, geojson=df_adjusted.geometry, locations=df_adjusted.index, color=jaar, mapbox_style="open-street-map",
                           hover_name=df_adjusted.Country, zoom=1, height=800)
+    map.update_layout(
+        title_text="<b>Highest disaster intensity for each country in " + str(jaar) +'</b>')
     st.plotly_chart(map, use_container_width=True)
     
     st.title('Map specific code')
