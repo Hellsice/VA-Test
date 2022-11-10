@@ -487,3 +487,12 @@ if pages == 'The Big 4':
 Category_data = Category_data[(Category_data['Disaster Type']=='Drought') | (Category_data['Disaster Type']=='Flood') | (Category_data['Disaster Type']=='Storm') | (Category_data['Disaster Type']=='Earthquake')]
 Category_data = Category_data.dropna(axis=0)
 Category_data = Category_data.sort_values(by='Disaster Type').reset_index(drop=True)""", language='python')
+    st.markdown('remove rows with 0 values after making each chart')
+    st.code("""Category_data = Category_data[Category_data['Jaar 0']!=0]
+fig_a2 = px.box(Category_data, x='Disaster Type', y='Jaar 0', color='Disaster Type')
+Category_data = Category_data[Category_data['Jaar 1']!=0]
+fig_b2 = px.box(Category_data, x='Disaster Type', y='Jaar 1', color='Disaster Type')
+Category_data = Category_data[Category_data['Jaar 2']!=0]
+fig_c2 = px.box(Category_data, x='Disaster Type', y='Jaar 2', color='Disaster Type')
+Category_data = Category_data[Category_data['Jaar 3']!=0]
+fig_d2 = px.box(Category_data, x='Disaster Type', y='Jaar 3', color='Disaster Type')""", language='python')
