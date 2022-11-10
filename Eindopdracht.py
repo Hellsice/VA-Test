@@ -56,19 +56,19 @@ output = open('GDP.xls', 'wb')\n\
 output.write(response.content)\n\
 output.close()", language='python')
     st.markdown('')
-    st.markdown('Cleaning disaster data')
-    st.markdown('filtered by year')
+    st.title('General Code')
+    st.markdown('Removed unnecessary years.')
     st.code('rampen_df = rampen_df[rampen_df.Year >= 1961].reset_index(drop=True).fillna(0)\n\
 rampen_df = rampen_df[rampen_df.Year <= 2021].reset_index(drop=True).fillna(0)', language='python')
     st.markdown('')
-    st.markdown('recalculated Deaths and total affected')
+    st.markdown('Recalculated deaths and total affected.')
     st.code("rampen_df['Total Affected new'] = rampen_df['No Affected']+rampen_df['No Injured']+rampen_df['No Homeless']\n\
 rampen_df_controle = rampen_df.groupby(['ISO', 'Country', 'Year', 'Disaster Group', 'Disaster Subgroup', 'Disaster Type',\n\
        'Disaster Subtype'])['Total Affected new'].sum().reset_index()\n\
 rampen_df_controle2 = rampen_df.groupby(['ISO', 'Country', 'Year', 'Disaster Group', 'Disaster Subgroup', 'Disaster Type',\n\
        'Disaster Subtype'])['Total Deaths'].sum().reset_index()", language='python')
     st.markdown('')
-    st.markdown('Determined GDP% change compared to the world')
+    st.markdown('Determined GDP percentage change compared to the world.')
     st.code("rampen_df.iloc[index, rampen_df.columns.get_loc('Jaar 0')] = \n\
     (GDP[GDP['Country Code']==rampen_df['ISO'][index]][str(rampen_df['Year'][index])].values[0] - GDP[GDP['Country Code']==rampen_df['ISO'][index]][str(rampen_df['Year'][index]-1)].values[0])/\n\
             GDP[GDP['Country Code']==rampen_df['ISO'][index]][str(rampen_df['Year'][index]-1)].values[0]\n\
@@ -76,7 +76,8 @@ rampen_df_controle2 = rampen_df.groupby(['ISO', 'Country', 'Year', 'Disaster Gro
             GDP[GDP['Country Code']=='WLD'][str(rampen_df['Year'][index]-1)].values[0]", language='python')
     st.code("rampen_df['Jaar 0']=rampen_df['Jaar 0']*100", language='python')
     st.markdown('')
-    st.markdown('')
+    st.markdown("Making a submit button that's shared across different pages.")
+    st.markdown('note, all code after this point is part of the button.')
     st.code('''with st.form(key='my_form'):
         commit = st.form_submit_button('Submit')
         Total_affected_mult = st.slider('Set the total affected multiplier',min_value=0.0, value=0.3 ,max_value=1.0, step=0.01)
@@ -84,7 +85,7 @@ rampen_df_controle2 = rampen_df.groupby(['ISO', 'Country', 'Year', 'Disaster Gro
         if pages == 'Map' or pages == 'Economic change':
             jaar = st.slider('Select year',min_value=1961, value=2018 ,max_value=2018)''',language='python')
     st.markdown('')
-    st.markdown('Bepaling van intensiteit')
+    st.markdown('Calculating intensity.')
     st.code('''rampen_df['Intensity'] = 0
     for i in range(len(rampen_df)):
         a = Population[Population['Country Code']==rampen_df['ISO'][i]]
@@ -92,12 +93,17 @@ rampen_df_controle2 = rampen_df.groupby(['ISO', 'Country', 'Year', 'Disaster Gro
             rampen_df['Intensity'][i] = (rampen_df['Total Deaths'][i]+Total_affected_mult*rampen_df['Total Affected new'][i])/(a[str(rampen_df['Year'][i])].values[0])''', language='python')
     st.code('''rampen_df = rampen_df[rampen_df['Intensity'] >= Intensity_threshold].reset_index(drop=True)''', language='python')
     st.markdown('')
-    st.markdown('Calculating the quantiles of Disaster types and subtypes')
+    st.markdown('Calculating the quantiles of Disaster types and subtypes.')
     st.code('''quantiles_subtypes = rampen_df.groupby(['Disaster Group', 'Disaster Subgroup', 'Disaster Type','Disaster Subtype'])['Intensity'].quantile([0.25, 0.75]).reset_index()
 ''', language='python')
-    st.markdown('Assigning category values to each Disaster type and subtype')
-    st.code('''for index, row in test2.iterrows():
-            test2.iloc[index, test2.columns.get_loc('Category Types')] = 3 if row['Intensity']>row['0.75'] else (1 if row['Intensity']<row['0.25'] else 2)
+    st.markdown('Merging dataframes and fixing column names.')
+    st.code('''test2 = rampen_df.merge(quantiles_types, left_on=['Disaster Group', 'Disaster Subgroup', 'Disaster Type'], 
+                               right_on=['Disaster Group', 'Disaster Subgroup', 'Disaster Type'], how='left')
+        test2.columns = ['Year','ISO','Country','Disaster Group','Disaster Subgroup','Disaster Type', 'Disaster Subtype',
+                 'Total Deaths','Total Affected new','Intensity','Jaar 0','Jaar 1','Jaar 2','Jaar 3',"0.25",'0.75']''', language='python')
+    st.markdown('Assigning category values to each disaster type and subtype.')
+    st.code('''for index, row in rampen_df.iterrows():
+            rampen_df.iloc[index, rampen_df.columns.get_loc('Category Types')] = 3 if row['Intensity']>row['0.75'] else (1 if row['Intensity']<row['0.25'] else 2)
 ''', language='python')
     
 
