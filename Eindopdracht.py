@@ -85,7 +85,12 @@ rampen_df_controle2 = rampen_df.groupby(['ISO', 'Country', 'Year', 'Disaster Gro
     if pages == 'Map' or pages == 'Economic change':
         jaar = st.slider('Select year',min_value=1961, value=2018 ,max_value=2018)''',language='python')
     st.markdown('')
-    st.markdown('Calculating intensity.')
+    st.markdown('Calculating intensity using the following formula:')
+    st.markdown(r'''
+$$ 
+\Intensity = \frac{Deaths + 0.3*Total_affected}{Population} 
+$$
+''')
     st.code('''rampen_df['Intensity'] = 0
 for i in range(len(rampen_df)):
     a = Population[Population['Country Code']==rampen_df['ISO'][i]]
@@ -108,15 +113,7 @@ test2.columns = ['Year','ISO','Country','Disaster Group','Disaster Subgroup','Di
 rampen_df = rampen_df.sort_values(by='Year').reset_index(drop=True)''', language='python')
     
 
-    st.markdown(r'''
-## Latex example
-### full equation 
-$$ 
-\Delta G = \Delta\sigma \frac{a}{b} 
-$$ 
-### inline
-Assume $\frac{a}{b}=1$ and $\sigma=0$...  
-''')
+    
 
    
     
