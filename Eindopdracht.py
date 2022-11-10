@@ -214,11 +214,12 @@ if pages == 'Economic change':
                 a = 'In ' + str(jaar) + ' was er in ' + landen_box + ' een natuurramp met type: ' + type_rampen[i]\
                 +'.\nHiervan was de intensiteit: ' + str(round(intensiteit[i]*round_mult)/round_mult)
             else:
-                a = 'In ' + str(jaar) + ' was er in ' + landen_box + ' een natuurramp met type en subtype: ' + subtypen[i]\
-                +'.\n Hiervan was de intensiteit: ' + str(round(intensiteit[i]*round_mult)/round_mult)
+                a = 'In ' + str(jaar) + ' was er in ' + landen_box + ' een natuurramp met type en subtype: ' + subtypen[i] + '.'
+                b = 'Hiervan was de intensiteit: ' + str(round(intensiteit[i]*round_mult)/round_mult) + '.'
             print(a)
             with col5:
                 st.markdown(a)
+                st.markdown(b)
 
     
     grafiek_max_jaar = jaar+5
