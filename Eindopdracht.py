@@ -50,7 +50,7 @@ if pages== 'Map' or pages == 'Economic change' or pages == 'Comparison disasters
             Soort_data_dict = {'Intensity':'Intensity','Affected':'Affected'}
         if pages == 'Economic change':
             landen = rampen_df[['Country', 'ISO']]
-            landen_naam = rampen_df['Country'].unique().sort_values(by='Country')
+            landen_naam = rampen_df['Country'].unique().sort()
             landen_dict = landen.set_index('Country').to_dict()
             landen_dict = landen_dict['ISO']
             landen_box = st.selectbox('Choose a country', landen_naam)
